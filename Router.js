@@ -12,6 +12,7 @@ export default class Router {
     }
 
     init() {
+        this.initMutationObserver()
         this.determineExistsSelectorRoutes()
 
         let currentUrl = window.location.pathname
@@ -20,7 +21,7 @@ export default class Router {
         let route = currentRoute ? currentRoute : new Route(currentUrl, () => console.log('not found'), 'not-found')
 
         window.history.replaceState({'routeName': route.name}, 'name', route.url)
-        window.onpopstate = () => this.findRouteByName(window.history.state.route).action()
+        window.onpopstate = () => this.findRouteByName(window.history.state.routeName).action()
 
         route.action()
 
@@ -28,26 +29,32 @@ export default class Router {
 
 
     determineExistsSelectorRoutes() {
-        let routeSelectors = document.querySelectorAll('[route]')
+        let routeElements = document.querySelectorAll('[route]')
 
-        for (let routeSelector of routeSelectors) {
-            let routeName = routeSelector.getAttribute('route')
-
-            let route = this.findRouteByName(routeName)
-
-            if (route) {
-                routeSelector.addEventListener('click', () => this.executeRoute(route))
-
-            } else {
-                routeSelector.addEventListener('click', () => {
-                    throw 'Route ' + routeName + ' not exists'
-                })
-
-            }
+        for (let routeElement of routeElements) {
+            this.addRouteElementEventListener(routeElement)
 
         }
 
     }
+
+    addRouteElementEventListener(routeElement) {
+        let routeName = routeElement.getAttribute('route')
+
+        let route = this.findRouteByName(routeName)
+
+        if (route) {
+            routeElement.addEventListener('click', () => this.executeRoute(route))
+
+        } else {
+            routeElement.addEventListener('click', () => {
+                throw 'Route ' + routeName + ' not exists'
+            })
+
+        }
+
+    }
+
 
     findRouteByName(name) {
         for (let route of this.routes) {
@@ -82,6 +89,25 @@ export default class Router {
             window.history.pushState({'routeName': route.name}, 'name', route.url)
 
         }
+
+    }
+
+    initMutationObserver() {
+        let mutationObserver = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                mutation.addedNodes.forEach((node) => {
+                    if (node instanceof Element && node.hasAttribute('route')) {
+                        this.addRouteElementEventListener(node)
+                        
+                    }
+
+                })
+
+            })
+
+        })
+
+        mutationObserver.observe(document.body, {childList: true, subtree: true})
 
     }
 
