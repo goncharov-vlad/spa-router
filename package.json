@@ -1,0 +1,12 @@
+{
+  "name": "@goncharov-vlad/router",
+  "version": "1.0.0",
+  "description": "Base and easy to use url router for browsers",
+  "main": "Router.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Goncharov Vlad",
+  "license": "ISC"
+}
