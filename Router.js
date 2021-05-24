@@ -1,9 +1,6 @@
 import Route from './src/Route.js'
 
-export {Route}
-
-export default class Router {
-    routes
+class Router {
 
     constructor(routes) {
         this.routes = routes
@@ -16,9 +13,18 @@ export default class Router {
         this.determineExistsSelectorRoutes()
 
         let currentUrl = window.location.pathname
-        let currentRoute = this.findRouteByUrl(currentUrl)
+        let route = this.findRouteByUrl(currentUrl)
 
-        let route = currentRoute ? currentRoute : new Route(currentUrl, () => console.log('not found'), 'not-found')
+        if (!route) {
+            let notFoundRoute = this.findRouteByName('not-found')
+
+            if (!notFoundRoute) {
+                notFoundRoute = new Route(currentUrl, () => console.log('not found'), 'not-found')
+
+            }
+
+            route = notFoundRoute
+        }
 
         window.history.replaceState({'routeName': route.name}, 'name', route.url)
         window.onpopstate = () => this.findRouteByName(window.history.state.routeName).action()
@@ -26,7 +32,6 @@ export default class Router {
         route.action()
 
     }
-
 
     determineExistsSelectorRoutes() {
         let routeElements = document.querySelectorAll('[route]')
@@ -38,24 +43,43 @@ export default class Router {
 
     }
 
+    /**
+     * @param routeElement {Element}
+     */
     addRouteElementEventListener(routeElement) {
         let routeName = routeElement.getAttribute('route')
 
-        let route = this.findRouteByName(routeName)
-
-        if (route) {
-            routeElement.addEventListener('click', () => this.executeRoute(route))
-
-        } else {
-            routeElement.addEventListener('click', () => {
-                throw 'Route ' + routeName + ' not exists'
-            })
+        if (!routeName) {
+            return
 
         }
 
+        let route = this.findRouteByName(routeName)
+
+        let listenerCallback = (event) => {
+            event.preventDefault()
+            throw new Error('Route ' + routeName + ' not exists')
+
+        }
+
+        if (route) {
+            listenerCallback = (event) => {
+                event.preventDefault()
+                this.executeRoute(route)
+
+            }
+
+        }
+
+        routeElement.addEventListener('click', listenerCallback)
+
     }
 
-
+    /**
+     *
+     * @param name {string}
+     * @returns {boolean|Route}
+     */
     findRouteByName(name) {
         for (let route of this.routes) {
             if (route.name === name) {
@@ -69,6 +93,10 @@ export default class Router {
 
     }
 
+    /**
+     * @param url {string}
+     * @returns {boolean|Route}
+     */
     findRouteByUrl(url) {
         for (let route of this.routes) {
             if (route.url === url) {
@@ -82,6 +110,9 @@ export default class Router {
 
     }
 
+    /**
+     * @param route {Route}
+     */
     executeRoute(route) {
         if (window.history.state.routeName !== route.name) {
             route.action()
@@ -92,13 +123,16 @@ export default class Router {
 
     }
 
+    /**
+     *
+     */
     initMutationObserver() {
         let mutationObserver = new MutationObserver((mutations) => {
             mutations.forEach((mutation) => {
                 mutation.addedNodes.forEach((node) => {
                     if (node instanceof Element && node.hasAttribute('route')) {
                         this.addRouteElementEventListener(node)
-                        
+
                     }
 
                 })
@@ -113,3 +147,5 @@ export default class Router {
 
 }
 
+export default Router
+export {Route}
