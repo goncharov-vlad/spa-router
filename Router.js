@@ -22,9 +22,11 @@ class Router {
     /**
      * Runs document observer for finding new added route element in DOM object,
      * Determines existing route element in DOM and adds callback action of the route,
-     * Resolves by url, executes and commits current route in history state
+     * Resolves by url, executes and commits first loaded route in history state
      */
     init() {
+        //Commits the route in history state
+        window.onpopstate = () => this.findRouteByName(this.getCurrentRouteName()).action()
         //Runs document observer for finding new added route element in DOM object
         this.initMutationObserver()
         //Determines existing route element in DOM and adds callback action of the route
@@ -49,11 +51,7 @@ class Router {
             route = notFoundRoute
         }
 
-        //Commits the route in history state
-        window.history.replaceState({'routeName': route.name}, 'name', route.url)
-        window.onpopstate = () => this.findRouteByName(window.history.state.routeName).action()
-        //Executes the route
-        route.action()
+        this.executeRoute(route, true)
 
     }
 
@@ -127,14 +125,30 @@ class Router {
      * Executes route action and commits it in history state if th route is not current
      *
      * @param route {Route}
+     * @param firstLoad {boolean}
      */
-    executeRoute(route) {
-        if (window.history.state.routeName !== route.name) {
-            route.action()
+    executeRoute(route, firstLoad = false) {
+        route.action()
 
+        if (firstLoad) {
+            window.history.replaceState({'routeName': route.name}, 'name', route.url)
+
+            return
+
+        }
+
+        if (this.getCurrentRouteName() !== route.name && !firstLoad) {
             window.history.pushState({'routeName': route.name}, 'name', route.url)
 
         }
+
+    }
+
+    /**
+     * @returns {string}
+     */
+    getCurrentRouteName() {
+        return window.history.state.routeName
 
     }
 
