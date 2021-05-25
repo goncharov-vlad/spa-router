@@ -26,7 +26,7 @@ class Router {
      */
     init() {
         //Commits the route in history state
-        window.onpopstate = () => this.findRouteByName(this.getCurrentRouteName()).action()
+        window.onpopstate = () => this.findRouteBy('name', this.getCurrentRouteName()).action()
         //Runs document observer for finding new added route element in DOM object
         this.initMutationObserver()
         //Determines existing route element in DOM and adds callback action of the route
@@ -38,13 +38,13 @@ class Router {
         }
         //Resolves route by current url
         let currentUrl = window.location.pathname
-        let route = this.findRouteByUrl(currentUrl)
+        let route = this.findRouteBy('url', currentUrl)
         //If route is not found executes "not found" route
         if (!route) {
-            let notFoundRoute = this.findRouteByName('not-found')
-            //If "not found" route is not defines then assign default "not found" route
+            let notFoundRoute = this.findRouteBy('name', 'not-found')
+            //If "not found" route is not defined then assign default "not found" route
             if (!notFoundRoute) {
-                notFoundRoute = new Route(currentUrl, () => console.log('not found'), 'not-found')
+                notFoundRoute = new Route('not-found', () => console.log('not found'), currentUrl)
 
             }
 
@@ -66,7 +66,7 @@ class Router {
 
         }
 
-        let route = this.findRouteByName(routeName)
+        let route = this.findRouteBy('name', routeName)
         //Event in case of route is not defined
         let listenerCallback = (event) => {
             event.preventDefault()
@@ -88,12 +88,13 @@ class Router {
     }
 
     /**
-     * @param name {string}
      * @returns {boolean|Route}
+     * @param key string
+     * @param value {*}
      */
-    findRouteByName(name) {
+    findRouteBy(key, value) {
         for (let route of this.routes) {
-            if (route.name === name) {
+            if (route.hasOwnProperty(key) && route[key] === value) {
                 return route
 
             }
@@ -105,24 +106,7 @@ class Router {
     }
 
     /**
-     * @param url {string}
-     * @returns {boolean|Route}
-     */
-    findRouteByUrl(url) {
-        for (let route of this.routes) {
-            if (route.url === url) {
-                return route
-
-            }
-
-        }
-
-        return false
-
-    }
-
-    /**
-     * Executes route action and commits it in history state if th route is not current
+     * Executes route action and commits it in history state if the route is not current
      *
      * @param route {Route}
      * @param firstLoad {boolean}
