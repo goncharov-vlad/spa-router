@@ -38,7 +38,8 @@ class Router {
         }
         //Resolves route by current url
         let currentUrl = window.location.pathname
-        let route = this.findRouteBy('url', currentUrl)
+        let route = this.defineRouteByCurrentPath(currentUrl)
+
         //If route is not found executes "not found" route
         if (!route) {
             let notFoundRoute = this.findRouteBy('name', 'not-found')
@@ -51,7 +52,11 @@ class Router {
             route = notFoundRoute
         }
 
-        this.executeRoute(route, true)
+        let dataFromUrl = route.fetchDataFromUrl(currentUrl)
+
+        //Run initial route
+        window.history.replaceState({'routeName': route.name}, 'name', currentUrl)
+        route.action(dataFromUrl)
 
     }
 
@@ -59,7 +64,9 @@ class Router {
      * @param routeElement {Element}
      */
     addRouteElementEventListener(routeElement) {
-        let routeName = routeElement.getAttribute('route')
+        let attributeRouteData = JSON.parse(routeElement.getAttribute('route'))
+
+        let routeName = attributeRouteData.name
 
         if (!routeName) {
             return
@@ -67,23 +74,40 @@ class Router {
         }
 
         let route = this.findRouteBy('name', routeName)
-        //Event in case of route is not defined
-        let listenerCallback = (event) => {
-            event.preventDefault()
-            throw new Error('Route ' + routeName + ' not exists')
+
+        if (!route) {
+            throw new Error('Route "' + routeName + '" not exists')
 
         }
-        //Event in case of route is defined
-        if (route) {
-            listenerCallback = (event) => {
-                event.preventDefault()
-                this.executeRoute(route)
+
+        let routeValues = attributeRouteData.values
+
+        route.urlItems.forEach((item) => {
+            if (!routeValues.hasOwnProperty(item) || !routeValues[item]) {
+                throw new Error('Route "' + routeName + '" must has "' + item + '" value')
+
+            }
+
+        })
+
+        routeElement.addEventListener('click', (event) => {
+            event.preventDefault()
+            this.executeRoute(routeValues, route)
+
+        })
+
+    }
+
+    defineRouteByCurrentPath(currentPath) {
+        for (let route of this.routes) {
+            if (route.isRoutePath(currentPath)) {
+                return route
 
             }
 
         }
 
-        routeElement.addEventListener('click', listenerCallback)
+        return false
 
     }
 
@@ -108,21 +132,14 @@ class Router {
     /**
      * Executes route action and commits it in history state if the route is not current
      *
+     * @param routeValues {{}}
      * @param route {Route}
-     * @param firstLoad {boolean}
      */
-    executeRoute(route, firstLoad = false) {
-        route.action()
+    executeRoute(routeValues, route) {
+        route.action(routeValues)
 
-        if (firstLoad) {
-            window.history.replaceState({'routeName': route.name}, 'name', route.url)
-
-            return
-
-        }
-
-        if (this.getCurrentRouteName() !== route.name && !firstLoad) {
-            window.history.pushState({'routeName': route.name}, 'name', route.url)
+        if (this.getCurrentRouteName() !== route.name) {
+            window.history.pushState({'routeName': route.name}, 'name', route.makeUrlFromValues(routeValues))
 
         }
 
