@@ -1,69 +1,94 @@
 import Route from './src/Route.js'
 
+/**
+ * Main class of route controlling
+ *
+ * @param routes {Route[]} Array of routes
+ */
 class Router {
     /**
-     * Array of routes
-     *
-     * @param routes
-     */
-    routes
-
-    /**
-     * Main class of route controlling
-     *
      * @param routes {Route[]}
      */
     constructor(routes) {
         this.routes = routes
-        this.init()
+
+        //When onpopstate is ran executes route action
+        window.onpopstate = () => this.findRouteBy('name', this.getCurrentRouteName()).action()
+
+        this.initMutationObserver()
+
+        let routeElements = this.determinateRouteElements()
+
+        if (routeElements.length) {
+            this.addRouteEventListenerToRouteElements(routeElements)
+
+        }
+
+        this.runInitialRoute()
 
     }
 
-    /**
-     * Runs document observer for finding new added route element in DOM object,
-     * Determines existing route element in DOM and adds callback action of the route,
-     * Resolves by url, executes and commits first loaded route in history state
-     */
-    init() {
-        //Commits the route in history state
-        window.onpopstate = () => this.findRouteBy('name', this.getCurrentRouteName()).action()
-        //Runs document observer for finding new added route element in DOM object
-        this.initMutationObserver()
-        //Determines existing route element in DOM and adds callback action of the route
-        let routeElements = document.querySelectorAll('[route]')
+    determinateRouteElements() {
+        return document.querySelectorAll('[route]')
 
+    }
+
+    addRouteEventListenerToRouteElements(routeElements) {
         for (let routeElement of routeElements) {
-            this.addRouteElementEventListener(routeElement)
+            this.addRouteEventListenerToElement(routeElement)
 
         }
-        //Resolves route by current url
-        let currentUrl = window.location.pathname
-        let route = this.defineRouteByCurrentPath(currentUrl)
+
+    }
+
+    runInitialRoute() {
+        let initialPath = window.location.pathname
+
+        let initialRoute = this.defineInitialRouteByUrl(initialPath)
+
+        let dataFromUrl = initialRoute.getUrlTemplate().fetchRouteDataFromPath(initialPath)
+
+        window.history.replaceState({'routeName': initialRoute.name}, 'name', initialPath)
+        initialRoute.action(dataFromUrl)
+
+    }
+
+    defineInitialRouteByUrl(url) {
+        let route = this.defineRouteByCurrentPath(url)
 
         //If route is not found executes "not found" route
         if (!route) {
             let notFoundRoute = this.findRouteBy('name', 'not-found')
             //If "not found" route is not defined then assign default "not found" route
             if (!notFoundRoute) {
-                notFoundRoute = new Route('not-found', () => console.log('not found'), currentUrl)
+                notFoundRoute = new Route('not-found', () => console.log('not found'), url)
 
             }
 
             route = notFoundRoute
         }
 
-        let dataFromUrl = route.fetchDataFromUrl(currentUrl)
+        return route
 
-        //Run initial route
-        window.history.replaceState({'routeName': route.name}, 'name', currentUrl)
-        route.action(dataFromUrl)
+    }
+
+    defineRouteByCurrentPath(url) {
+        for (let route of this.routes) {
+            if (route.getUrlTemplate().pathMatch(url)) {
+                return route
+
+            }
+
+        }
+
+        return false
 
     }
 
     /**
      * @param routeElement {Element}
      */
-    addRouteElementEventListener(routeElement) {
+    addRouteEventListenerToElement(routeElement) {
         let attributeRouteData = JSON.parse(routeElement.getAttribute('route'))
 
         let routeName = attributeRouteData.name
@@ -82,7 +107,7 @@ class Router {
 
         let routeValues = attributeRouteData.values
 
-        route.urlItems.forEach((item) => {
+        route.getUrlTemplate().getTemplateItems().forEach((item) => {
             if (!routeValues.hasOwnProperty(item) || !routeValues[item]) {
                 throw new Error('Route "' + routeName + '" must has "' + item + '" value')
 
@@ -95,19 +120,6 @@ class Router {
             this.executeRoute(routeValues, route)
 
         })
-
-    }
-
-    defineRouteByCurrentPath(currentPath) {
-        for (let route of this.routes) {
-            if (route.isRoutePath(currentPath)) {
-                return route
-
-            }
-
-        }
-
-        return false
 
     }
 
@@ -130,16 +142,18 @@ class Router {
     }
 
     /**
-     * Executes route action and commits it in history state if the route is not current
+     * If the route is not current executes route action and commits it in history state
      *
      * @param routeValues {{}}
      * @param route {Route}
      */
     executeRoute(routeValues, route) {
-        route.action(routeValues)
-
         if (this.getCurrentRouteName() !== route.name) {
-            window.history.pushState({'routeName': route.name}, 'name', route.makeUrlFromValues(routeValues))
+            route.action(routeValues)
+
+            let routeUrl = route.getUrlTemplate().replaceRouteUrlTemplateItemsWithValues(routeValues)
+
+            window.history.pushState({'routeName': route.name}, 'name', routeUrl)
 
         }
 
@@ -161,7 +175,7 @@ class Router {
             mutations.forEach((mutation) => {
                 mutation.addedNodes.forEach((node) => {
                     if (node instanceof Element && node.hasAttribute('route')) {
-                        this.addRouteElementEventListener(node)
+                        this.addRouteEventListenerToElement(node)
 
                     }
 
