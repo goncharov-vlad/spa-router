@@ -45,6 +45,27 @@ class Route {
 
     }
 
+    execute(values, replaceState = false) {
+        this.action(values)
+
+        let state = {
+            'route': {
+                'name': this.name,
+                'values': values
+
+            }
+        }
+
+        if (replaceState) {
+            window.history.replaceState(state, 'name', '/' + this.urlTemplate.replaceRouteUrlTemplateItemsWithValues(values))
+
+        } else {
+            window.history.pushState(state, 'name', '/' + this.urlTemplate.replaceRouteUrlTemplateItemsWithValues(values))
+
+        }
+
+    }
+
 }
 
 export default Route
