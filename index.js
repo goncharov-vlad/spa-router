@@ -1,11 +1,11 @@
-import Pipeline from "./src/Pipeline";
 import Repository from "./src/Repository";
 import Route from "./src/Route";
+import Pipeline from "./src/Pipeline/Index";
 
 /**
  * @param repository {Repository}
  */
-class Router {
+export default class Router {
     /**
      * @param routes {Route[]}
      */
@@ -33,7 +33,7 @@ class Router {
             mutations.forEach((mutation) => {
                 mutation.addedNodes.forEach((node) => {
                     if (node instanceof Element && node.hasAttribute('route')) {
-                        node.addEventListener('click', (event) => pipeline.onClick(event, this.repository))
+                        node.addEventListener('click', (event) => pipeline.onClick(event, node, this.repository))
 
                     }
 
@@ -52,4 +52,3 @@ class Router {
 }
 
 export {Route}
-export default Router

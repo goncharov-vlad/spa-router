@@ -9,7 +9,7 @@ export default class Repository {
 
     /**
      * @param name
-     * @returns {boolean|Route}
+     * @return boolean|Route
      */
     findByName(name) {
         for (let route of this.routes) {
@@ -26,11 +26,11 @@ export default class Repository {
 
     /**
      * @param path
-     * @returns {boolean|*}
+     * @return boolean|Route
      */
     findByPath(path) {
         for (let route of this.routes) {
-            if (route.getUrlTemplate().pathMatch(path)) {
+            if (route.pathMatch(path)) {
                 return route
 
             }

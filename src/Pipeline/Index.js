@@ -1,4 +1,4 @@
-import Route from "./Route";
+import Route from "../Route";
 
 export default class Pipeline {
     /**
@@ -15,8 +15,8 @@ export default class Pipeline {
     }
 
     /**
-     * @param event {{}}
-     * @param element {element}
+     * @param event {Event}
+     * @param element {$ElementType}
      * @param repository {Repository}
      */
     onClick(event, element, repository) {
@@ -40,16 +40,6 @@ export default class Pipeline {
             throw new Error(`Route "${routeData.name}" not exists`)
 
         }
-
-        let pathKeys = route.getUrlTemplate().getTemplateItems()
-
-        pathKeys.forEach((item) => {
-            if (!routeData.values.hasOwnProperty(item) || !routeData.values[item]) {
-                throw new Error('Route "' + routeData.name + '" must has "' + item + '" value')
-
-            }
-
-        })
 
         if (window.history.state.route.name !== routeData.name) {
             route.execute(routeData.values)
@@ -77,10 +67,10 @@ export default class Pipeline {
         }
 
         //Fetch data from url
-        let data = route.getUrlTemplate().fetchRouteDataFromPath(path)
+        let values = route.fetchPathValues(path)
 
         //Execute route with data
-        route.execute(data, true)
+        route.execute(values, true)
     }
 
 }
