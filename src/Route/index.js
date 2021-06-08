@@ -1,108 +1,81 @@
 import PathTemplate from "../PathTemplate"
 
-/**
- * Basic route
- *
- * @param name {string}
- * @param pathTemplate {string}
- * @param action {Function}
- */
-export default class Route {
+class Route {
+
+    /**
+     * @property {string}
+     * @protected
+     */
+    _name
+
+    /**
+     * @property {Function}
+     * @protected
+     */
+    _action
+
+    /**
+     * @property {PathTemplate}
+     * @protected
+     */
+    _pathTemplate
+
     /**
      * @param name {string}
      * @param action {Function}
-     * @param pathTemplateString {string}
+     * @param pathTemplate {string}
      */
-    constructor(name, action, pathTemplateString) {
-        this.action = action
-        this.name = name
-        this.pathTemplate = new PathTemplate(pathTemplateString)
+    constructor(name, action, pathTemplate) {
+        this._name = name
+        this._action = action
+        this._pathTemplate = new PathTemplate(pathTemplate)
 
     }
 
     /**
      * @param path {string}
-     * @return Object
+     * @return {{}}
      */
     fetchPathValues(path) {
-        let values = {}
-
-        path.split('/').forEach((part, index) => {
-            let partPathTemplate = this.pathTemplate.findPartByIndex(index)
-
-            if (partPathTemplate && partPathTemplate.getType() === 'value') {
-                values[partPathTemplate.getName()] = part
-
-            }
-
-        })
-
-        return values
+        return this._pathTemplate.fetchPathValues(path)
 
     }
 
     /**
      * @param path {string}
-     * @return boolean
+     * @return {boolean}
      */
     pathMatch(path) {
-        let pathParts = path.split('/')
-
-        if (pathParts.length !== this.pathTemplate.parts.length) {
-            return false
-
-        }
-
-        let result = false;
-
-        pathParts.forEach((part, index) => {
-            let pathTemplatePart = this.pathTemplate.findPartByIndex(index)
-
-            if (pathTemplatePart === false) {
-                return
-
-            }
-
-            if (pathTemplatePart.getType() === 'value') {
-                return
-
-            }
-
-            result = part === pathTemplatePart.getName()
-
-        })
-
-        return result
+        return this._pathTemplate.pathMath(path)
 
     }
 
-    execute(values, replaceState = false) {
-        this.pathTemplate.findPartsByType('value').forEach((part) => {
-            if (!values.hasOwnProperty(part.getName())) {
-                throw new Error('Route "' + this.name + '" must has "' + part.getName() + '" value')
+    /**
+     * @param values {{}}
+     * @return {string}
+     */
+    makePath(values) {
+        return this._pathTemplate.makePath(values)
+
+    }
+
+    /**
+     * @param values {{}}
+     */
+    execute(values) {
+        //Validates values
+        this._pathTemplate.findPartsByType('value').forEach((part) => {
+            if (!values.hasOwnProperty(part.name)) {
+                throw new Error('Route "' + this._name + '" must has "' + part.name + '" value')
 
             }
 
         })
 
-        this.action(values)
-
-        let state = {
-            'route': {
-                'name': this.name,
-                'values': values
-
-            }
-        }
-
-        if (replaceState) {
-            window.history.replaceState(state, this.name, window.location.pathname)
-
-        } else {
-            window.history.pushState(state, this.name, this.pathTemplate.makePath(values))
-
-        }
+        this._action(values)
 
     }
 
 }
+
+export default Route

@@ -1,9 +1,42 @@
-/**
- * @param routes {Route[]}
- */
-export default class Repository {
+import Route from "../Route";
+
+class Repository {
+
+    /**
+     * @property {Route[]}
+     * @protected
+     */
+    _routes
+
+    /**
+     * @property {Route}
+     * @protected
+     */
+    _notFoundRoute
+
+    /**
+     * @param routes {Route[]}
+     */
     constructor(routes) {
-        this.routes = routes
+        this._routes = routes
+
+        let notFoundRoute = this.findByName('not-found')
+        //If "not found" route is not defined then assign default "not found" route
+        if (!notFoundRoute) {
+            notFoundRoute = new Route('not-found', () => console.log('not found'), '/404')
+
+        }
+
+        this._notFoundRoute = notFoundRoute
+
+    }
+
+    /**
+     *
+     * @return {_notFoundRoute}
+     */
+    get notFoundRoute() {
+        return this._notFoundRoute
 
     }
 
@@ -12,7 +45,7 @@ export default class Repository {
      * @return boolean|Route
      */
     findByName(name) {
-        for (let route of this.routes) {
+        for (let route of this._routes) {
             if (route.name === name) {
                 return route
 
@@ -29,7 +62,7 @@ export default class Repository {
      * @return boolean|Route
      */
     findByPath(path) {
-        for (let route of this.routes) {
+        for (let route of this._routes) {
             if (route.pathMatch(path)) {
                 return route
 
@@ -42,3 +75,5 @@ export default class Repository {
     }
 
 }
+
+export default Repository

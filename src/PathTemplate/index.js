@@ -1,9 +1,11 @@
-import Part from './src/Part'
+class PathTemplate {
 
-/**
- * @param parts {Part[]}
- */
-export default class PathTemplate {
+    /**
+     * @property {Part[]}
+     * @protected
+     */
+    _parts
+
     /**
      * @param pathTemplate {string}
      */
@@ -30,20 +32,44 @@ export default class PathTemplate {
 
             }
 
-            parts.push(new Part(partName, partType))
+            parts.push({
+                'name': partName,
+                'type': partType
+            })
 
         })
 
-        this.parts = parts
+        this._parts = parts
 
     }
 
     /**
-     * @param index
-     * @return boolean|Part
+     * @param path {string}
+     * @return {{}}
+     */
+    fetchPathValues(path) {
+        let values = {}
+
+        path.split('/').forEach((part, index) => {
+            let templatePart = this.findPartByIndex(index)
+
+            if (templatePart && templatePart.type === 'value') {
+                values[templatePart.name] = part
+
+            }
+
+        })
+
+        return values
+
+    }
+
+    /**
+     * @param index {number}
+     * @return {boolean|Part}
      */
     findPartByIndex(index) {
-        let part = this.parts[index]
+        let part = this._parts[index]
 
         if (part) {
             return part
@@ -56,13 +82,13 @@ export default class PathTemplate {
 
     /**
      * @param type {string}
-     * @return Part[]
+     * @return {Part[]}
      */
     findPartsByType(type) {
         let parts = []
 
-        this.parts.forEach((part) => {
-            if (part.getType() !== type) {
+        this._parts.forEach((part) => {
+            if (part.type !== type) {
                 return
 
             }
@@ -76,16 +102,13 @@ export default class PathTemplate {
 
     /**
      * @param values {{}}
-     * @return string
+     * @return {string}
      */
     makePath(values) {
-
         let pathPart = []
-        this.parts.forEach((part) => {
-            let type = part.getType()
-            let name = part.getName()
 
-            pathPart.push(type === 'value' ? values[name] : name)
+        this._parts.forEach((part) => {
+            pathPart.push(part.type === 'value' ? values[part.name] : part.name)
 
         })
 
@@ -93,4 +116,41 @@ export default class PathTemplate {
 
     }
 
+    /**
+     * @param path {string}
+     * @return {boolean}
+     */
+    pathMath(path) {
+        let pathParts = path.split('/')
+
+        if (pathParts.length !== this._parts.length) {
+            return false
+
+        }
+
+        let result = false;
+
+        pathParts.forEach((part, index) => {
+            let templatePart = this.findPartByIndex(index)
+
+            if (templatePart === false) {
+                return
+
+            }
+
+            if (templatePart.type === 'value') {
+                return
+
+            }
+
+            result = part === templatePart.name
+
+        })
+
+        return result
+
+    }
+
 }
+
+export default PathTemplate

@@ -1,39 +1,37 @@
 import Repository from "./src/Repository";
 import Route from "./src/Route";
-import Pipeline from "./src/Pipeline/Index";
 
-/**
- * @param repository {Repository}
- */
-export default class Router {
+class Router {
+
+    /**
+     * @property {Repository}
+     * @protected
+     */
+    _repository
+
     /**
      * @param routes {Route[]}
      */
     constructor(routes) {
-        this.repository = new Repository(routes)
+        this._repository = new Repository(routes)
 
-    }
-
-    process() {
-        let pipeline = new Pipeline()
-        //When onpopstate is ran executes route action
-        window.onpopstate = () => pipeline.onPopUp(this.repository)
-        //Get all route elements from DOM
+        //When onpopstate is ran
+        window.onpopstate = () => this.executeRouteByPath(window.location.pathname, true)
+        //Gets all route elements from DOM
         let routeElements = document.querySelectorAll('[route]')
-        //When a click to route
-        if (routeElements.length) {
-            for (let routeElement of routeElements) {
-                routeElement.addEventListener('click', (event) => pipeline.onClick(event, routeElement, this.repository))
 
-            }
+        for (let routeElement of routeElements) {
+            //When a click to route
+            routeElement.addEventListener('click', (event) => this.onClickEvent(event, routeElement))
 
         }
-        //When a new route element in DOM
+
         let mutationObserver = new MutationObserver((mutations) => {
             mutations.forEach((mutation) => {
                 mutation.addedNodes.forEach((node) => {
                     if (node instanceof Element && node.hasAttribute('route')) {
-                        node.addEventListener('click', (event) => pipeline.onClick(event, node, this.repository))
+                        //When a new route element in DOM
+                        node.addEventListener('click', (event) => this.onClickEvent(event, node))
 
                     }
 
@@ -44,11 +42,51 @@ export default class Router {
         })
 
         mutationObserver.observe(document.body, {childList: true, subtree: true})
-        //When page is load
-        pipeline.onLoad(window.location.pathname, this.repository)
+
+        this.executeRouteByPath(window.location.pathname, true)
+
+    }
+
+    /**
+     * @param event {Event}
+     * @param element {$ElementType}
+     */
+    onClickEvent(event, element) {
+        event.preventDefault()
+
+        let path = element.getAttribute('route')
+
+        this.executeRouteByPath(path)
+
+    }
+
+    /**
+     * @param path {string}
+     * @param replaceState {boolean}
+     */
+    executeRouteByPath(path, replaceState = false) {
+        let route = this._repository.findByPath(path)
+
+        if (!route) {
+            route = this._repository.notFoundRoute
+
+        }
+
+        let values = route.fetchPathValues(path)
+
+        route.execute(values)
+
+        if (replaceState) {
+            window.history.replaceState({}, '', window.location.pathname)
+
+        } else {
+            window.history.pushState({}, '', route.makePath(values))
+
+        }
 
     }
 
 }
 
+export default Router
 export {Route}
