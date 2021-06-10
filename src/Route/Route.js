@@ -1,4 +1,4 @@
-import PathTemplate from "../PathTemplate"
+import PathTemplate from "../PathTemplate/PathTemplate.js"
 
 class Route {
 
@@ -7,6 +7,14 @@ class Route {
      * @protected
      */
     _name
+
+    /**
+     * @property {_name}
+     */
+    get name() {
+        return this._name
+
+    }
 
     /**
      * @property {Function}
@@ -21,11 +29,26 @@ class Route {
     _pathTemplate
 
     /**
-     * @param name {string}
-     * @param action {Function}
-     * @param pathTemplate {string}
+     * @param name {*}
+     * @param action {*}
+     * @param pathTemplate {*}
      */
-    constructor(name, action, pathTemplate) {
+    constructor(pathTemplate, action, name) {
+        if (name !== undefined && typeof name !== 'string') {
+            throw new Error('Name of route must be string type')
+
+        }
+
+        if (action === undefined) {
+            throw new Error('Specify action of route')
+
+        }
+
+        if (typeof action !== 'function') {
+            throw new Error('Action of route must be function type')
+
+        }
+
         this._name = name
         this._action = action
         this._pathTemplate = new PathTemplate(pathTemplate)

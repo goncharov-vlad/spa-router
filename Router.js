@@ -1,5 +1,5 @@
-import Repository from "./src/Repository";
-import Route from "./src/Route";
+import Repository from "./src/Repository/Repository.js";
+import Route from "./src/Route/Route";
 
 class Router {
 
@@ -10,9 +10,31 @@ class Router {
     _repository
 
     /**
-     * @param routes {Route[]}
+     * @param routeStack {{}[]}
      */
-    constructor(routes) {
+    constructor(routeStack) {
+        if (routeStack === undefined) {
+            throw new Error('Specify stack of routes')
+
+        }
+
+        if (!Array.isArray(routeStack)) {
+            throw new Error('Stack of routes must be array type')
+
+        }
+
+        let routes = []
+
+        routeStack.forEach((route) => {
+            if (!(route instanceof Object) || route instanceof Array) {
+                throw new Error('Route must be object type')
+
+            }
+
+            routes.push(new Route(route.path, route.action, route.name))
+
+        })
+
         this._repository = new Repository(routes)
 
         //When onpopstate is ran
@@ -89,4 +111,3 @@ class Router {
 }
 
 export default Router
-export {Route}

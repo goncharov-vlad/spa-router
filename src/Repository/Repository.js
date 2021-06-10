@@ -1,4 +1,4 @@
-import Route from "../Route";
+import Route from "../Route/Route.js";
 
 class Repository {
 
@@ -19,11 +19,12 @@ class Repository {
      */
     constructor(routes) {
         this._routes = routes
-
+console.log(routes)
         let notFoundRoute = this.findByName('not-found')
+        console.log(notFoundRoute)
         //If "not found" route is not defined then assign default "not found" route
         if (!notFoundRoute) {
-            notFoundRoute = new Route('not-found', () => console.log('not found'), '/404')
+            notFoundRoute = new Route('/404', () => console.log('not found'), 'not-found')
 
         }
 

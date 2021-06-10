@@ -10,16 +10,26 @@ class PathTemplate {
      * @param pathTemplate {string}
      */
     constructor(pathTemplate) {
-        let handledPathTemplate = pathTemplate.trim()
+        if (pathTemplate === undefined) {
+            throw new Error('Specify path of route')
 
-        if (handledPathTemplate[0] !== '/') {
+        }
+
+        if (typeof pathTemplate !== 'string') {
+            throw new Error('Path of route must be string type')
+
+        }
+
+        if (pathTemplate[0] !== '/') {
             throw new Error('Route path template must starts from slash')
 
         }
 
+        let trimmedPathTemplate = pathTemplate.trim()
+
         let parts = []
 
-        handledPathTemplate.split('/').forEach((part, index) => {
+        trimmedPathTemplate.split('/').forEach((part, index) => {
             let partName = part
             let partType = 'base'
 

@@ -3,9 +3,7 @@
   "version": "1.0.0",
   "description": "Base and easy to use url router for browsers",
   "type": "module",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "main": "Router.js",
   "author": "Goncharov Vlad",
   "license": "ISC"
 }
