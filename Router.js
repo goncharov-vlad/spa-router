@@ -10,7 +10,9 @@ class Router {
     _repository
 
     /**
-     * @param config {{}}
+     * @param config {Object}
+     * @param config.notFoundAction {Function}
+     * @param config.stack {Array.<Object>}
      */
     constructor(config) {
         if (config.stack === undefined) {
