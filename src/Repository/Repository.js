@@ -9,35 +9,10 @@ class Repository {
     _routes
 
     /**
-     * @property {Route}
-     * @protected
-     */
-    _notFoundRoute
-
-    /**
      * @param routes {Route[]}
      */
     constructor(routes) {
         this._routes = routes
-console.log(routes)
-        let notFoundRoute = this.findByName('not-found')
-        console.log(notFoundRoute)
-        //If "not found" route is not defined then assign default "not found" route
-        if (!notFoundRoute) {
-            notFoundRoute = new Route('/404', () => console.log('not found'), 'not-found')
-
-        }
-
-        this._notFoundRoute = notFoundRoute
-
-    }
-
-    /**
-     *
-     * @return {_notFoundRoute}
-     */
-    get notFoundRoute() {
-        return this._notFoundRoute
 
     }
 

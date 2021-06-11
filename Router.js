@@ -10,22 +10,22 @@ class Router {
     _repository
 
     /**
-     * @param routeStack {{}[]}
+     * @param config {{}}
      */
-    constructor(routeStack) {
-        if (routeStack === undefined) {
+    constructor(config) {
+        if (config.stack === undefined) {
             throw new Error('Specify stack of routes')
 
         }
 
-        if (!Array.isArray(routeStack)) {
+        if (!Array.isArray(config.stack)) {
             throw new Error('Stack of routes must be array type')
 
         }
 
         let routes = []
 
-        routeStack.forEach((route) => {
+        config.stack.forEach((route) => {
             if (!(route instanceof Object) || route instanceof Array) {
                 throw new Error('Route must be object type')
 
@@ -36,6 +36,18 @@ class Router {
         })
 
         this._repository = new Repository(routes)
+
+        this._notFoundAction = () => console.log('not-found')
+
+        if (config.notFoundAction !== undefined) {
+            if (typeof config.notFoundAction !== 'function') {
+                throw new Error('Not found action must be function type')
+
+            }
+
+            this._notFoundAction = config.notFoundAction
+
+        }
 
         //When onpopstate is ran
         window.onpopstate = () => this.executeRouteByPath(window.location.pathname, true)
@@ -87,24 +99,28 @@ class Router {
      * @param replaceState {boolean}
      */
     executeRouteByPath(path, replaceState = false) {
+        let action = this._notFoundAction
+        let pathname = path
+
         let route = this._repository.findByPath(path)
 
-        if (!route) {
-            route = this._repository.notFoundRoute
+        if (route) {
+            let values = route.fetchPathValues(path)
+
+            pathname = route.makePath(values)
+            action = () => route.execute(values)
 
         }
-
-        let values = route.fetchPathValues(path)
-
-        route.execute(values)
 
         if (replaceState) {
-            window.history.replaceState({}, '', window.location.pathname)
+            window.history.replaceState({}, '', pathname)
 
         } else {
-            window.history.pushState({}, '', route.makePath(values))
+            window.history.pushState({}, '', pathname)
 
         }
+
+        action()
 
     }
 
