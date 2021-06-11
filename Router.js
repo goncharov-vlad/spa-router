@@ -15,32 +15,9 @@ class Router {
      * @param config.stack {Array.<Object>}
      */
     constructor(config) {
-        if (config.stack === undefined) {
-            throw new Error('Specify stack of routes')
-
-        }
-
-        if (!Array.isArray(config.stack)) {
-            throw new Error('Stack of routes must be array type')
-
-        }
-
-        let routes = []
-
-        config.stack.forEach((route) => {
-            if (!(route instanceof Object) || route instanceof Array) {
-                throw new Error('Route must be object type')
-
-            }
-
-            routes.push(new Route(route.path, route.action, route.name))
-
-        })
-
-        this._repository = new Repository(routes)
-
+        this._repository = new Repository(config.stack)
+        //Defines not found action
         this._notFoundAction = () => console.log('not-found')
-
         if (config.notFoundAction !== undefined) {
             if (typeof config.notFoundAction !== 'function') {
                 throw new Error('Not found action must be function type')

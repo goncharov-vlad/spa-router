@@ -7,29 +7,42 @@ class PathTemplate {
     _parts
 
     /**
+     * @property {string}
+     * @protected
+     */
+    _template
+
+    /**
+     * @property {_template}
+     */
+    get template() {
+        return this._template
+
+    }
+
+    /**
      * @param pathTemplate {string}
      */
     constructor(pathTemplate) {
         if (pathTemplate === undefined) {
-            throw new Error('Specify path of route')
+            throw new Error('Route must have path template')
 
         }
 
         if (typeof pathTemplate !== 'string') {
-            throw new Error('Path of route must be string type')
+            throw new Error('Route path template must be string type')
 
         }
 
         if (pathTemplate[0] !== '/') {
-            throw new Error('Route path template must starts from slash')
+            throw new Error('Route path template must start from slash')
 
         }
 
-        let trimmedPathTemplate = pathTemplate.trim()
+        this._template = pathTemplate.trim()
 
         let parts = []
-
-        trimmedPathTemplate.split('/').forEach((part, index) => {
+        this._template.split('/').forEach((part, index) => {
             let partName = part
             let partType = 'base'
 

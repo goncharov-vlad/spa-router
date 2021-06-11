@@ -3,20 +3,6 @@ import PathTemplate from "../PathTemplate/PathTemplate.js"
 class Route {
 
     /**
-     * @property {string}
-     * @protected
-     */
-    _name
-
-    /**
-     * @property {_name}
-     */
-    get name() {
-        return this._name
-
-    }
-
-    /**
      * @property {Function}
      * @protected
      */
@@ -29,16 +15,18 @@ class Route {
     _pathTemplate
 
     /**
-     * @param name {*}
+     * @property {_pathTemplate}
+     */
+    get pathTemplate() {
+        return this._pathTemplate
+
+    }
+
+    /**
      * @param action {*}
      * @param pathTemplate {*}
      */
-    constructor(pathTemplate, action, name) {
-        if (name !== undefined && typeof name !== 'string') {
-            throw new Error('Name of route must be string type')
-
-        }
-
+    constructor(pathTemplate, action) {
         if (action === undefined) {
             throw new Error('Specify action of route')
 
@@ -49,7 +37,6 @@ class Route {
 
         }
 
-        this._name = name
         this._action = action
         this._pathTemplate = new PathTemplate(pathTemplate)
 
@@ -86,15 +73,6 @@ class Route {
      * @param values {{}}
      */
     execute(values) {
-        //Validates values
-        this._pathTemplate.findPartsByType('value').forEach((part) => {
-            if (!values.hasOwnProperty(part.name)) {
-                throw new Error('Route "' + this._name + '" must has "' + part.name + '" value')
-
-            }
-
-        })
-
         this._action(values)
 
     }
