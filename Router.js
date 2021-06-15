@@ -29,7 +29,7 @@ class Router {
         }
 
         //When onpopstate is ran
-        window.onpopstate = () => this.executeRouteByPath(window.location.pathname, true)
+        window.onpopstate = () => this.execute(window.location.pathname, true)
         //Gets all route elements from DOM
         let routeElements = document.querySelectorAll('[route]')
 
@@ -56,7 +56,7 @@ class Router {
 
         mutationObserver.observe(document.body, {childList: true, subtree: true})
 
-        this.executeRouteByPath(window.location.pathname, true)
+        this.execute(window.location.pathname, true)
 
     }
 
@@ -69,7 +69,7 @@ class Router {
 
         let path = element.getAttribute('route')
 
-        this.executeRouteByPath(path)
+        this.execute(path)
 
     }
 
@@ -77,7 +77,7 @@ class Router {
      * @param path {string}
      * @param replaceState {boolean}
      */
-    executeRouteByPath(path, replaceState = false) {
+    execute(path, replaceState = false) {
         let action = this._notFoundAction
         let pathname = path
 

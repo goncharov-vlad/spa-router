@@ -9,7 +9,7 @@ class Repository {
     _routes
 
     /**
-     * @param stack {{}[]}
+     * @param stack {Object[]}
      */
     constructor(stack) {
         if (stack === undefined) {
