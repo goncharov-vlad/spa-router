@@ -6,17 +6,17 @@ It's easy to install, configure and use.
 
 ## Installing / Getting started
 
-Run to get success with installation
+Run to get success with installation.
 
 ```shell
 npm i goncharov-vlad/spa-router
 ```
 
-That command is just common way to install JS module
+That command is just common way to install JS module.
 
 ### Initial Configuration
 
-* Import module
+* Import module.
 
 ```js
 import Router from '@goncharov-vlad/router'
@@ -35,6 +35,7 @@ let config =
                 'action': () => console.log('Home')
             },
             {
+                //{postId} and {commentId} will be fetched from url and passed to action callback as first paramenter
                 'pathTemplate': '/post/{postId}/comment/{commentId}',
                 'action': (values) => console.log(`Comment ${values.commentId} of post ${values.postId}`)
             },
@@ -46,27 +47,40 @@ let config =
         'notFoundAction': () => console.log('Page not found')
     }
 ```
-[here](#initial-configuration)
-* Create new router instance with defined config
+
+* Create new router instance with defined config.
 
 ```js
 new Router(config)
 ```
-  
-That's all
+
+That's all.
 
 ## Features
 
-What's all the bells and whistles this project can perform?
+* You don't have to use old hash style of path.
 
-* Called route will not be executed if that is current
-* Router works when you use
+* The router stores all history, that does mean when client using next/back buttons of browser correspond routes will be
+  triggered.
 
-* What's the main functionality
-* You can also do another thing
-* If you get really randy, you can even do this
+* There is exists check to not re-trigger current route
+
+* Code of the module is very small, and it doesn't use any additional modules, that makes the module fast and simply
+
+## Full config overview
+
+* **config** `object` _index_
+  * stack `route[]` _require_
+  * notFoundRoute `function`
+  
+* **route** `object`
+  * pathTemplate `string` _require_
+  * action `function` _require_
+
 
 ## Contributing
+
+Module is very easy to read, also you can get full documentation with jsDocs, just run `jsdoc -r path/to/roter/code`
 
 When you publish something open source, one of the greatest motivations is that anyone can just jump in and start
 contributing to your project.
