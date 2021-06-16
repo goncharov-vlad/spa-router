@@ -15,9 +15,11 @@ class Router {
      * @param config.stack {Array.<Object>}
      */
     constructor(config) {
-        this._repository = new Repository(config.stack)
+        if (config === undefined) {
+            throw new Error('Define config')
+
+        }
         //Defines not found action
-        this._notFoundAction = () => console.log('not-found')
         if (config.notFoundAction !== undefined) {
             if (typeof config.notFoundAction !== 'function') {
                 throw new Error('Not found action must be function type')
@@ -26,7 +28,13 @@ class Router {
 
             this._notFoundAction = config.notFoundAction
 
+        } else {
+            this._notFoundAction = () => console.log('not-found')
+
         }
+
+        this._repository = new Repository(config.stack)
+
 
         //When onpopstate is ran
         window.onpopstate = () => this.execute(window.location.pathname, true)
