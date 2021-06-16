@@ -67,6 +67,8 @@ That's all.
 
 * Code of the module is very small, and it doesn't use any additional modules, that makes the module fast and simply
 
+* The router automatically finds all new added in DOM  route elements (MutationObserver)
+
 ## Full config overview
 
 * **config** `object` _index_
