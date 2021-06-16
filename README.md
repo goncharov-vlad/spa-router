@@ -14,17 +14,20 @@ npm i goncharov-vlad/spa-router
 
 That command is just common way to install JS module
 
-### Configuration
+### Initial Configuration
 
-Import module, then create new instance of router and specify route stack as config property. To rewrite action
-which will be executed when route is not found define `notFoundAction`.
-
-<b>Example</b>
+* Import module
 
 ```js
 import Router from '@goncharov-vlad/router'
+```
 
-new Router(
+* Define config object and specify route stack as config property. Default action which will be executed when route is
+  not found: `console.log('not-found')`. To rewrite action which will be executed when route is not found
+  specify `notFoundAction` as config property.
+
+```js
+let config =
     {
         'stack': [
             {
@@ -42,20 +45,22 @@ new Router(
         ],
         'notFoundAction': () => console.log('Page not found')
     }
-)
 ```
-
-Default action which will be executed when route is not found:
+[here](#Initial-Configuration)
+* Create new router instance with defined config
 
 ```js
-console.log('not-found')
+new Router(config)
 ```
+  
+That's all
 
 ## Features
 
 What's all the bells and whistles this project can perform?
+
 * Called route will not be executed if that is current
-* Router works when you use 
+* Router works when you use
 
 * What's the main functionality
 * You can also do another thing
