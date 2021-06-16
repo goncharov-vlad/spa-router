@@ -46,7 +46,7 @@ let config =
         'notFoundAction': () => console.log('Page not found')
     }
 ```
-[here](#Initial-Configuration)
+[here](#initial-configuration)
 * Create new router instance with defined config
 
 ```js
