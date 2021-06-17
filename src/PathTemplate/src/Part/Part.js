@@ -21,7 +21,7 @@ class Part {
     _type
 
     /**
-     * @property {_name}
+     * @property {_type}
      */
     get type() {
         return this._type

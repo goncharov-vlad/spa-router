@@ -35,13 +35,12 @@ let config =
                 'action': () => console.log('Home')
             },
             {
-                //{postId} and {commentId} will be fetched from url and passed to action callback as first paramenter
-                'pathTemplate': '/post/{postId}/comment/{commentId}',
-                'action': (values) => console.log(`Comment ${values.commentId} of post ${values.postId}`)
-            },
-            {
                 'pathTemplate': '/contact',
                 'action': () => console.log('Contact')
+            },
+            {
+                'pathTemplate': '/post/{postId}/comment/{commentId}',
+                'action': (values) => console.log(`Comment ${values.commentId} of post ${values.postId}`)
             }
         ],
         'notFoundAction': () => console.log('Page not found')
@@ -58,6 +57,28 @@ That's all.
 
 ## Features
 
+After configuring the router, you can specify any html element as the route by adding the 'route' attribute to it with
+the path.
+
+__Example__
+
+```html
+<a route='/post/11/comment/12'></a>
+<div route='/contact'></div>
+<button route='/'></button>
+```
+
+When element is clicked, the router matches the argument value to each path template from route stack and execute it
+action passing data as first parameter.
+
+Imagine you have `<a route='/post/11/comment/12'></a>` and route for it with path
+template `/post/{postId}/comment/{commentId}`, that mean you will be able you get `postId` with value `11` and
+`commentId` with value `12` inside action callback first parameter of
+
+```js
+(values) => console.log(`Comment ${values.commentId} of post ${values.postId}`)
+```
+
 * You don't have to use old hash style of path.
 
 * The router stores all history, that does mean when client using next/back buttons of browser correspond routes will be
@@ -67,18 +88,17 @@ That's all.
 
 * Code of the module is very small, and it doesn't use any additional modules, that makes the module fast and simply
 
-* The router automatically finds all new added in DOM  route elements (MutationObserver)
+* The router automatically finds all new added in DOM route elements (MutationObserver)
 
 ## Full config overview
 
-* **config** `object` _index_
-  * stack `route[]` _require_
-  * notFoundRoute `function`
-  
-* **route** `object`
-  * pathTemplate `string` _require_
-  * action `function` _require_
+* **config** `object` _parent_
+    * stack `route[]` _require_
+    * notFoundRoute `function`
 
+* **route** `object`
+    * pathTemplate `string` _require_
+    * action `function` _require_
 
 ## Contributing
 
