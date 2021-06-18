@@ -60,8 +60,6 @@ That's all.
 After configuring the router, you can specify any html element as the route by adding the 'route' attribute to it with
 the path.
 
-__Example__
-
 ```html
 <a route='/post/11/comment/12'></a>
 <div route='/contact'></div>
@@ -79,16 +77,18 @@ template `/post/{postId}/comment/{commentId}`, that mean you will be able you ge
 (values) => console.log(`Comment ${values.commentId} of post ${values.postId}`)
 ```
 
-* You don't have to use old hash style of path.
+### What's the bells and whistles this project can perform?
 
 * The router stores all history, that does mean when client using next/back buttons of browser correspond routes will be
   triggered.
 
-* There is exists check to not re-trigger current route
-
 * Code of the module is very small, and it doesn't use any additional modules, that makes the module fast and simply
 
-* The router automatically finds all new added in DOM route elements (MutationObserver)
+* The router automatically finds all new dynamically added in DOM route elements (MutationObserver)
+
+* There is exists check to not re-trigger current route
+
+* You don't have to use old hash style of path.
 
 ## Full config overview
 
