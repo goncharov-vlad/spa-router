@@ -22,9 +22,9 @@ That command is just common way to install JS module.
 import Router from '@goncharov-vlad/router'
 ```
 
-* Define config object and specify route stack as config property. Default action which will be executed when route is
-  not found: `console.log('not-found')`. To rewrite action which will be executed when route is not found
-  specify `notFoundAction` as config property.
+* Define config object and specify route stack as config property.
+
+    __Example__:
 
 ```js
 let config =
@@ -69,9 +69,13 @@ the path.
 When element is clicked, the router matches the argument value to each path template from route stack and execute it
 action passing data as first parameter.
 
-Imagine you have `<a route='/post/11/comment/12'></a>` and route for it with path
-template `/post/{postId}/comment/{commentId}`, that mean you will be able you get `postId` with value `11` and
-`commentId` with value `12` inside action callback first parameter of
+__Example__:
+
+Imagine you have route element:`<a route='/post/11/comment/12'></a>` and route with path
+template `/post/{postId}/comment/{commentId}` witch will be matched after click, and you will be able you get `postId`
+with value `11` and `commentId` with value `12` inside action callback by first parameter
+
+Action callback can be looks like:
 
 ```js
 (values) => console.log(`Comment ${values.commentId} of post ${values.postId}`)
@@ -92,13 +96,25 @@ template `/post/{postId}/comment/{commentId}`, that mean you will be able you ge
 
 ## Full config overview
 
-* **config** `object` _parent_
-    * stack `route[]` _require_
-    * notFoundRoute `function`
+* **config** `object` <sub>parent</sub>
+
+  _Description_
+    * **stack** `route[]` <sub>require</sub>
+
+      _Description_
+    * **notFoundRoute** `function`
+
+      _Description_
 
 * **route** `object`
-    * pathTemplate `string` _require_
-    * action `function` _require_
+
+  _Description_
+    * **pathTemplate** `string` <sub>require</sub>
+
+      _Description_
+    * **action** `function` <sub>require</sub>
+
+      _Description_
 
 ## Contributing
 
@@ -115,23 +131,6 @@ If there's anything else the developer needs to know (e.g. the code style guide)
 lot of things to take into consideration, it is common to separate this section to its own file called
 `CONTRIBUTING.md` (or similar). If so, you should say that it exists here.
 
-## Links
-
-Even though this information can be found inside the project on machine-readable format like in a .json file, it's good
-to include a summary of most useful links to humans using your project. You can include links like:
-
-- Project homepage: https://your.github.com/awesome-project/
-- Repository: https://github.com/your/awesome-project/
-- Issue tracker: https://github.com/your/awesome-project/issues
-    - In case of sensitive bugs like security vulnerabilities, please contact my@email.com directly instead of using
-      issue tracker. We value your effort to improve the security and privacy of this project!
-- Related projects:
-    - Your other project: https://github.com/your/other-project/
-    - Someone else's project: https://github.com/someones/awesome-project/
-
 ## Licensing
 
-One really important part: Give your project a proper license. Here you should state what the license is and how to find
-the text version of the license. Something like:
-
-"The code in this project is licensed under MIT license."
+The code in this project is licensed under MIT license.
