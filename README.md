@@ -24,7 +24,7 @@ import Router from '@goncharov-vlad/router'
 
 * Define config object and specify route stack as config property.
 
-    __Example__:
+  __Example__:
 
 ```js
 let config =
@@ -72,8 +72,8 @@ action passing data as first parameter.
 __Example__:
 
 Imagine you have route element:`<a route='/post/11/comment/12'></a>` and route with path
-template `/post/{postId}/comment/{commentId}` witch will be matched after click, and you will be able you get `postId`
-with value `11` and `commentId` with value `12` inside action callback by first parameter
+template `/post/{postId}/comment/{commentId}` witch will be matched after click, and then you will be able you
+get `postId` with value `11` and `commentId` with value `12` inside action callback by first parameter.
 
 Action callback can be looks like:
 
@@ -86,35 +86,33 @@ Action callback can be looks like:
 * The router stores all history, that does mean when client using next/back buttons of browser correspond routes will be
   triggered.
 
-* Code of the module is very small, and it doesn't use any additional modules, that makes the module fast and simply
+* Code of the module is very small, and it doesn't use any additional modules, that makes the module fast and simply.
 
-* The router automatically finds all new dynamically added in DOM route elements (MutationObserver)
+* The router automatically finds all new dynamically added in DOM route elements (MutationObserver).
 
-* There is exists check to not re-trigger current route
+* There is exists check to not re-trigger current route.
 
 * You don't have to use old hash style of path.
 
 ## Full config overview
 
 * **config** `object` <sub>parent</sub>
-
-  _Description_
     * **stack** `route[]` <sub>require</sub>
 
-      _Description_
+      _Array of routes_
     * **notFoundRoute** `function`
 
-      _Description_
+      _Action which will be executed when route is not found. Default action is `() => console.log('not-found')`_
 
 * **route** `object`
 
-  _Description_
+  _Specific route_
     * **pathTemplate** `string` <sub>require</sub>
 
-      _Description_
+      _Path by which action will be executed. To pass values use name of value inside curly braces_
     * **action** `function` <sub>require</sub>
 
-      _Description_
+      _Action which will be executed. To get values from path use first param_
 
 ## Contributing
 
