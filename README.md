@@ -16,15 +16,15 @@ That command is just common way to install JS module.
 
 ### Initial Configuration
 
-* Import module.
+1. Import module.
 
 ```js
 import Router from '@goncharov-vlad/router'
 ```
 
-* Define config object and specify route stack as config property.
+2. Define config object and specify route stack as config property.
 
-  __Example__:
+__Example__:
 
 ```js
 let config =
@@ -47,7 +47,7 @@ let config =
     }
 ```
 
-* Create new router instance with defined config.
+3. Create new router instance with defined config.
 
 ```js
 new Router(config)
@@ -66,8 +66,8 @@ the path.
 <button route='/'></button>
 ```
 
-When element is clicked, the router matches the argument value to each path template from route stack and execute it
-action passing data as first parameter.
+When element is clicked, the router matches the argument value to each path template from route stack and when path
+template is matched executes it action passing data as first parameter.
 
 __Example__:
 
@@ -118,7 +118,8 @@ Action callback can be looks like:
 
 Contributions are always welcome!
 
-Project have to use [jsDocs](https://jsdoc.app/). You also can get full documentation with running `jsdoc -r path/to/roter/code`.
+Project have to use [jsDocs](https://jsdoc.app/). You also can get full documentation with
+running `jsdoc -r path/to/roter/code`.
 
 ## Licensing
 
