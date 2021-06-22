@@ -1,5 +1,4 @@
 import Repository from "./src/Repository/Repository.js";
-import Route from "./src/Route/Route";
 
 class Router {
 
@@ -34,7 +33,6 @@ class Router {
         }
 
         this._repository = new Repository(config.stack)
-
 
         //When onpopstate is ran
         window.onpopstate = () => this.execute(window.location.pathname, true)

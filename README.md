@@ -118,13 +118,7 @@ Action callback can be looks like:
 
 Contributions are always welcome!
 
-Project have to use [jsDocs](https://jsdoc.app/). You also can get full documentation with [jsDocs](https://jsdoc.app/),
-just run `jsdoc -r path/to/roter/code`.
-
-Some commands which will help you with developing:
-* `npm i` to install dev packages.
-* `npm run build` to build project.
-* `npm run watch` to get stream building.
+Project have to use [jsDocs](https://jsdoc.app/). You also can get full documentation with running `jsdoc -r path/to/roter/code`.
 
 ## Licensing
 
