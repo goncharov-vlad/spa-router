@@ -5,5 +5,5 @@
   "type": "module",
   "main": "Router.js",
   "author": "Goncharov Vlad",
-  "license": "ISC"
+  "license": "MIT"
 }
