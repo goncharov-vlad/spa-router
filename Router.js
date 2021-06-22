@@ -75,6 +75,11 @@ class Router {
 
         let path = element.getAttribute('route')
 
+        if (path === window.location.pathname) {
+            return
+
+        }
+
         this.execute(path)
 
     }
