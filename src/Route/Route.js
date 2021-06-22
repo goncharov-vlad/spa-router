@@ -23,8 +23,8 @@ class Route {
     }
 
     /**
-     * @param action {*}
-     * @param pathTemplate {*}
+     * @param action {Function}
+     * @param pathTemplate {string}
      */
     constructor(pathTemplate, action) {
         if (action === undefined) {
@@ -44,7 +44,7 @@ class Route {
 
     /**
      * @param path {string}
-     * @return {{}}
+     * @return {Object}
      */
     fetchPathValues(path) {
         return this._pathTemplate.fetchPathValues(path)
@@ -61,7 +61,7 @@ class Route {
     }
 
     /**
-     * @param values {{}}
+     * @param values {Object}
      * @return {string}
      */
     makePath(values) {
@@ -70,7 +70,7 @@ class Route {
     }
 
     /**
-     * @param values {{}}
+     * @param values {Object}
      */
     execute(values) {
         this._action(values)

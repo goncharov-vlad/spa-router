@@ -23,9 +23,10 @@ class Repository {
         }
 
         this._routes = []
+
         /**
-         * @param item.templatePath {*}
-         * @param item.action {*}
+         * @param item.templatePath {string}
+         * @param item.action {Function}
          */
         stack.forEach((item) => {
             if (!(item instanceof Object) || item instanceof Array) {

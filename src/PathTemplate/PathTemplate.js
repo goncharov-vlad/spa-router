@@ -68,7 +68,7 @@ class PathTemplate {
 
     /**
      * @param path {string}
-     * @return {{}}
+     * @return {Object}
      */
     fetchPathValues(path) {
         let values = {}
