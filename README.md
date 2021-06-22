@@ -19,7 +19,7 @@ That command is just common way to install JS module.
 1. Import module.
 
 ```js
-import Router from '@goncharov-vlad/router'
+import Router from '@goncharov-vlad/spa-router'
 ```
 
 2. Define config object and specify route stack as config property.
