@@ -116,18 +116,15 @@ Action callback can be looks like:
 
 ## Contributing
 
-Module is very easy to read, also you can get full documentation with jsDocs, just run `jsdoc -r path/to/roter/code`
+Contributions are always welcome!
 
-When you publish something open source, one of the greatest motivations is that anyone can just jump in and start
-contributing to your project.
+Project have to use [jsDocs](https://jsdoc.app/). You also can get full documentation with [jsDocs](https://jsdoc.app/),
+just run `jsdoc -r path/to/roter/code`.
 
-These paragraphs are meant to welcome those kind souls to feel that they are needed. You should state something like:
-
-"If you'd like to contribute, please fork the repository and use a feature branch. Pull requests are warmly welcome."
-
-If there's anything else the developer needs to know (e.g. the code style guide), you should link it here. If there's a
-lot of things to take into consideration, it is common to separate this section to its own file called
-`CONTRIBUTING.md` (or similar). If so, you should say that it exists here.
+Some commands which will help you with developing:
+* `npm i` to install dev packages.
+* `npm run build` to build project.
+* `npm run watch` to get stream building.
 
 ## Licensing
 
