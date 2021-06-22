@@ -18,6 +18,12 @@ class Router {
             throw new Error('Define config')
 
         }
+
+        if (!(config instanceof Object) || config instanceof Array) {
+            throw new Error('Route must be object type')
+
+        }
+
         //Defines not found action
         if (config.notFoundAction !== undefined) {
             if (typeof config.notFoundAction !== 'function') {
