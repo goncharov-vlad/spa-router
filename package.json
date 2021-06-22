@@ -1,7 +1,7 @@
 {
   "name": "@goncharov-vlad/spa-router",
   "version": "1.1.0",
-  "description": "Base and easy to use url router for browsers",
+  "description": "JS module which helps build not reloading web applications.",
   "type": "module",
   "main": "Router.js",
   "author": "Goncharov Vlad",
