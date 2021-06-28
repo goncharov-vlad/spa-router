@@ -1,6 +1,6 @@
 # SPA-router
 
-> JS module which helps build not reloading web applications.
+> JS module which helps to build not reloading web applications.
 
 It's easy to install, configure and use.
 
@@ -17,7 +17,7 @@ Run to get success with installation.
 npm i goncharov-vlad/spa-router
 ```
 
-That command is just common way to install JS module.
+This command is just common way to install JS module.
 
 ### Initial Configuration
 
@@ -47,8 +47,7 @@ let config =
                 'pathTemplate': '/post/{postId}/comment/{commentId}',
                 'action': (values) => console.log(`Comment ${values.commentId} of post ${values.postId}`)
             }
-        ],
-        'notFoundAction': () => console.log('Page not found')
+        ]
     }
 ```
 
@@ -72,15 +71,15 @@ the path.
 ```
 
 When element is clicked, the router matches the argument value to each path template from route stack and when path
-template is matched executes it action passing data as first parameter.
+template is matched the router executes its action passing data as first parameter.
 
 __Example__:
 
 Imagine you have route element:`<a route='/post/11/comment/12'></a>` and route with path
-template `/post/{postId}/comment/{commentId}` witch will be matched after click, and then you will be able you
+template `/post/{postId}/comment/{commentId}` which will be matched after click, and then you will be able to
 get `postId` with value `11` and `commentId` with value `12` inside action callback by first parameter.
 
-Action callback can be looks like:
+Action callback can look like:
 
 ```js
 (values) => console.log(`Comment ${values.commentId} of post ${values.postId}`)
@@ -88,14 +87,14 @@ Action callback can be looks like:
 
 ### What's the bells and whistles this project can perform?
 
-* The router stores all history, that does mean when client using next/back buttons of browser correspond routes will be
+* The router stores all history, that means when client uses next/back buttons of browser the correspond routes will be
   triggered.
 
-* Code of the module is very small, and it doesn't use any additional modules, that makes the module fast and simply.
+* Code of the module is very small, and it doesn't use any additional modules, that makes the module fast and simple.
 
 * The router automatically finds all new dynamically added in DOM route elements (MutationObserver).
 
-* There is exists check to not re-trigger current route.
+* There is check to as not to re-trigger current route.
 
 * You don't have to use old hash style of path.
 
@@ -124,7 +123,13 @@ Action callback can be looks like:
 Contributions are always welcome!
 
 Project have to use [jsDocs](https://jsdoc.app/). You also can get full documentation with
-running `jsdoc -r path/to/roter/code`.
+running `jsdoc -r path/to/this/module`.
+
+## Links
+
+Github - https://github.com/goncharov-vlad/spa-router
+
+Npm - https://www.npmjs.com/package/@goncharov-vlad/spa-router
 
 ## Licensing
 
