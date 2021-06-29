@@ -43,7 +43,7 @@ class Router {
         //When onpopstate is ran
         window.onpopstate = () => this.execute(window.location.pathname, true)
         //Gets all route elements from DOM
-        let routeElements = document.querySelectorAll('[route]')
+        let routeElements = document.querySelectorAll('a[href]')
 
         for (let routeElement of routeElements) {
             //When a click to route
@@ -54,7 +54,7 @@ class Router {
         let mutationObserver = new MutationObserver((mutations) => {
             mutations.forEach((mutation) => {
                 mutation.addedNodes.forEach((node) => {
-                    if (node instanceof Element && node.hasAttribute('route')) {
+                    if (node instanceof Element && node.tagName === 'A' && node.hasAttribute('href')) {
                         //When a new route element in DOM
                         node.addEventListener('click', (event) => this.onClickEvent(event, node))
 
@@ -77,9 +77,14 @@ class Router {
      * @param element {$ElementType}
      */
     onClickEvent(event, element) {
-        event.preventDefault()
+        let path = element.getAttribute('href')
 
-        let path = element.getAttribute('route')
+        if (new RegExp(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi).test(path)) {
+            return
+
+        }
+
+        event.preventDefault()
 
         if (path === window.location.pathname) {
             return
