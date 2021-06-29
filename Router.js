@@ -77,9 +77,14 @@ class Router {
      * @param element {$ElementType}
      */
     onClickEvent(event, element) {
-        let path = element.getAttribute('href')
+        let path = element.getAttribute('href').trim()
 
-        if (new RegExp(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi).test(path)) {
+        if (
+            path.substring(0, 7) === 'http://' ||
+            path.substring(0, 8) === 'https://' ||
+            path.substring(0, 6) === 'tcp://' ||
+            path.substring(0, 6) === 'ftp://'
+        ) {
             return
 
         }
