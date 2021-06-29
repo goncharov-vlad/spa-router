@@ -1,9 +1,20 @@
 {
   "name": "@goncharov-vlad/spa-router",
   "version": "1.1.1",
-  "description": "JS module which helps to build not reloading web applications.",
+  "author": "Goncharov Vlad <holldike@gmail.com>",
   "type": "module",
   "main": "Router.js",
-  "author": "Goncharov Vlad",
-  "license": "MIT"
+  "license": "MIT",
+  "description": "JS module which helps to build not reloading web applications.",
+  "homepage": "https://github.com/goncharov-vlad/spa-router#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/goncharov-vlad/spa-router"
+  },
+  "keywords": [
+    "routing",
+    "vanilla-router",
+    "javascript-router",
+    "single-page-router"
+  ]
 }
