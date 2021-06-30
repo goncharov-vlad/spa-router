@@ -41,7 +41,7 @@ class Router {
         this._repository = new Repository(config.stack)
 
         //When onpopstate is ran
-        window.onpopstate = () => this.execute(window.location.pathname, true)
+        window.onpopstate = () => this.execute(window.location.pathname + window.location.search, true)
         //Gets all route elements from DOM
         let routeElements = document.querySelectorAll('a[href]')
 
@@ -68,7 +68,7 @@ class Router {
 
         mutationObserver.observe(document.body, {childList: true, subtree: true})
 
-        this.execute(window.location.pathname, true)
+        this.execute(window.location.pathname + window.location.search, true)
 
     }
 
@@ -80,8 +80,8 @@ class Router {
         let path = element.getAttribute('href').trim()
 
         if (
-            path.substring(0, 7) === 'http://' ||
             path.substring(0, 8) === 'https://' ||
+            path.substring(0, 7) === 'http://' ||
             path.substring(0, 6) === 'tcp://' ||
             path.substring(0, 6) === 'ftp://'
         ) {
@@ -96,11 +96,6 @@ class Router {
 
         }
 
-        if (path === window.location.pathname) {
-            return
-
-        }
-
         this.execute(path)
 
     }
@@ -110,24 +105,33 @@ class Router {
      * @param replaceState {boolean}
      */
     execute(path, replaceState = false) {
-        let action = this._notFoundAction
-        let pathname = path
+        let params = ''
+        //If params is passed
+        if (path.indexOf('?') > -1) {
+            params = path.substring(path.indexOf('?'))
 
-        let route = this._repository.findByPath(path)
+        }
+
+        let action = this._notFoundAction
+
+        let pathname = path.replace(params, '')
+
+        let route = this._repository.findByPath(pathname)
 
         if (route) {
-            let values = route.fetchPathValues(path)
+            let values = route.fetchPathValues(pathname)
 
             pathname = route.makePath(values)
+
             action = () => route.execute(values)
 
         }
 
         if (replaceState) {
-            window.history.replaceState({}, '', pathname)
+            window.history.replaceState({}, '', pathname + params)
 
         } else {
-            window.history.pushState({}, '', pathname)
+            window.history.pushState({}, '', pathname + params)
 
         }
 

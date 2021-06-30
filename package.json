@@ -15,6 +15,12 @@
     "routing",
     "vanilla-router",
     "javascript-router",
-    "single-page-router"
+    "js-router",
+    "single-page-router",
+    "spa",
+    "single-page-application",
+    "spa-router",
+    "router",
+    "frontend-router"
   ]
 }
