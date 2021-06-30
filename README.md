@@ -14,7 +14,7 @@ new pages. The goal is faster transitions that make the website feel more like a
 Run to get success with installation.
 
 ```shell
-npm i goncharov-vlad/spa-router
+npm i @goncharov-vlad/spa-router
 ```
 
 This command is just common way to install JS module.
@@ -61,29 +61,28 @@ That's all.
 
 ## Features
 
-After configuring the router, you can specify any html element as the route by adding the 'route' attribute to it with
-the path.
+After configuring the router just use links as usually
 
-```html
-<a route='/post/11/comment/12'></a>
-<div route='/contact'></div>
-<button route='/'></button>
-```
-
-When element is clicked, the router matches the argument value to each path template from route stack and when path
-template is matched the router executes its action passing data as first parameter.
+When link is clicked, the router matches link path to each path template from route stack and when path template is
+matched the router executes its action passing data from path as first parameter.
 
 __Example__:
 
-Imagine you have route element:`<a route='/post/11/comment/12'></a>` and route with path
-template `/post/{postId}/comment/{commentId}` which will be matched after click, and then you will be able to
-get `postId` with value `11` and `commentId` with value `12` inside action callback by first parameter.
+```html
+<a href='/post/11/comment/12'></a>
+```
+
+Imagine you have that link and route with path template `/post/{postId}/comment/{commentId}` which will be matched after
+click, and then you will be able to get `postId` with value `11` and `commentId` with value `12` inside action callback
+by first parameter.
 
 Action callback can look like:
 
 ```js
 (values) => console.log(`Comment ${values.commentId} of post ${values.postId}`)
 ```
+
+__Of course, to pass data you also can use GET parameters__
 
 ### What's the bells and whistles this project can perform?
 
@@ -92,9 +91,7 @@ Action callback can look like:
 
 * Code of the module is very small, and it doesn't use any additional modules, that makes the module fast and simple.
 
-* The router automatically finds all new dynamically added in DOM route elements (MutationObserver).
-
-* There is check to as not to re-trigger current route.
+* The router automatically finds all new dynamically added in DOM links (MutationObserver).
 
 * You don't have to use old hash style of path.
 
