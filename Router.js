@@ -43,7 +43,7 @@ class Router {
         //When onpopstate is ran
         window.onpopstate = () => this.execute(window.location.pathname, true)
         //Gets all route elements from DOM
-        let routeElements = document.querySelectorAll('[route]')
+        let routeElements = document.querySelectorAll('a[href]')
 
         for (let routeElement of routeElements) {
             //When a click to route
@@ -54,7 +54,7 @@ class Router {
         let mutationObserver = new MutationObserver((mutations) => {
             mutations.forEach((mutation) => {
                 mutation.addedNodes.forEach((node) => {
-                    if (node instanceof Element && node.hasAttribute('route')) {
+                    if (node instanceof Element && node.tagName === 'A' && node.hasAttribute('href')) {
                         //When a new route element in DOM
                         node.addEventListener('click', (event) => this.onClickEvent(event, node))
 
@@ -77,9 +77,24 @@ class Router {
      * @param element {$ElementType}
      */
     onClickEvent(event, element) {
+        let path = element.getAttribute('href').trim()
+
+        if (
+            path.substring(0, 7) === 'http://' ||
+            path.substring(0, 8) === 'https://' ||
+            path.substring(0, 6) === 'tcp://' ||
+            path.substring(0, 6) === 'ftp://'
+        ) {
+            return
+
+        }
+
         event.preventDefault()
 
-        let path = element.getAttribute('route')
+        if (path[0] !== '/') {
+            throw new Error('Route path must start from slash')
+
+        }
 
         if (path === window.location.pathname) {
             return
