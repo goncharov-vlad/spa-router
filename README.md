@@ -14,7 +14,7 @@ new pages. The goal is faster transitions that make the website feel more like a
 Run to get success with installation.
 
 ```shell
-npm i goncharov-vlad/spa-router
+npm i @goncharov-vlad/spa-router
 ```
 
 This command is just common way to install JS module.
@@ -64,7 +64,7 @@ That's all.
 After configuring the router just use links as usually
 
 When link is clicked, the router matches link path to each path template from route stack and when path
-template is matched the router executes its action passing data as first parameter.
+template is matched the router executes its action passing data from path as first parameter.
 
 __Example__:
 ```html
