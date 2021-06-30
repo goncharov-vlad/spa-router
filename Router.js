@@ -91,6 +91,11 @@ class Router {
 
         event.preventDefault()
 
+        if (path[0] !== '/') {
+            throw new Error('Route path must start from slash')
+
+        }
+
         if (path === window.location.pathname) {
             return
 
