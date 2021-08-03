@@ -39,6 +39,11 @@ class PathTemplate {
 
         }
 
+        if (pathTemplate.indexOf('?') > -1) {
+            throw new Error("Route path template can't contain question mark")
+
+        }
+
         this._template = pathTemplate.trim()
 
         let parts = []
