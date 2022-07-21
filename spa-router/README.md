@@ -12,13 +12,14 @@ Make frond controller pattern for server
 
 <!-- Badges -->
 
-![code style](https://cdn.rawgit.com/standard/standard/master/badge.svg)       
 
+
+
+![Downloads](https://img.shields.io/npm/dt/@goncharov-vlad/spa-router?style=for-the-badge)
+![Size](https://img.shields.io/github/size/goncharov-vlad/spa-router/spa-router/out/build/bundle.js?style=for-the-badge)
+![License](https://img.shields.io/github/license/goncharov-vlad/spa-router?style=for-the-badge)
 ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E) 
-
-![downloads](https://img.shields.io/npm/dt/@goncharov-vlad/spa-router?style=for-the-badge)
-![license](https://img.shields.io/github/license/goncharov-vlad/spa-router?style=for-the-badge)  
 
 <!-- Main -->
 # SPA-router
@@ -55,8 +56,6 @@ import Router from '@goncharov-vlad/spa-router'
 
 2. Define config object and specify route stack as config property.
 
-__Example__:
-
 ```js
 const config = {
   stack: [
@@ -76,7 +75,7 @@ const config = {
 }
 ```
 
-1. Create new router instance with defined config.
+3. Create new router instance with defined config.
 
 ```js
 new Router(config)
@@ -156,3 +155,5 @@ Npm - https://www.npmjs.com/package/@goncharov-vlad/spa-router
 ## Licensing
 
 The code in this project is licensed under MIT license.
+
+![codeStyle](https://cdn.rawgit.com/standard/standard/master/badge.svg)       
