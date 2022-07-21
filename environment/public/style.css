@@ -1,0 +1,18 @@
+body {
+  padding: 2em;
+  display: flex;
+}
+
+.wrapper {
+  display: flex;
+}
+
+.links a {
+  display: block;
+  margin-bottom: 1em;
+}
+
+.content {
+  margin-left: 30em;
+  border-left: 1px;
+}

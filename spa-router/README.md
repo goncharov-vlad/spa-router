@@ -1,6 +1,30 @@
+
+
+<!-- 
+
+Supports all types of module and browser
+Why should I use the router ?
+Describe development tutorials - enviroments
+Fully typed
+Slashes does matter!
+Make frond controller pattern for server
+ -->
+
+<!-- Badges -->
+
+![code style](https://cdn.rawgit.com/standard/standard/master/badge.svg)       
+
+![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
+![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E) 
+
+![downloads](https://img.shields.io/npm/dt/@goncharov-vlad/spa-router?style=for-the-badge)
+![license](https://img.shields.io/github/license/goncharov-vlad/spa-router?style=for-the-badge)  
+
+<!-- Main -->
 # SPA-router
 
 > JS module which helps to build not reloading web applications.
+
 
 It's easy to install, configure and use.
 
@@ -8,6 +32,8 @@ _A single-page application (SPA) is a web application or website that interacts 
 the current web page with new data from the web server, instead of the default method of a web browser loading entire
 new pages. The goal is faster transitions that make the website feel more like a native app.
 <sub>[Wikipedia]</sub>_
+
+
 
 ## Installing / Getting started
 
@@ -32,26 +58,25 @@ import Router from '@goncharov-vlad/spa-router'
 __Example__:
 
 ```js
-let config =
+const config = {
+  stack: [
     {
-        'stack': [
-            {
-                'pathTemplate': '/',
-                'action': () => console.log('Home')
-            },
-            {
-                'pathTemplate': '/contact',
-                'action': () => console.log('Contact')
-            },
-            {
-                'pathTemplate': '/post/{postId}/comment/{commentId}',
-                'action': (values) => console.log(`Comment ${values.commentId} of post ${values.postId}`)
-            }
-        ]
+      pathTemplate: '/',
+      action: () => console.log('Home')
+    },
+    {
+      pathTemplate: '/contact',
+      action: () => console.log('Contact')
+    },
+    {
+      action: (values) => console.log(`Comment ${values.commentId} of post ${values.postId}`),
+      pathTemplate: '/post/{postId}/comment/{commentId}',
     }
+  ]
+}
 ```
 
-3. Create new router instance with defined config.
+1. Create new router instance with defined config.
 
 ```js
 new Router(config)
@@ -101,7 +126,7 @@ __Of course, to pass data you also can use GET parameters__
     * **stack** `route[]` <sub>require</sub>
 
       _Array of routes_
-    * **notFoundRoute** `function`
+    * **notFoundAction** `function`
 
       _Action which will be executed when route is not found. Default action is `() => console.log('not-found')`_
 
