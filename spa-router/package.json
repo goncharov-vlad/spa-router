@@ -1,0 +1,46 @@
+{
+  "name": "@goncharov-vlad/spa-router",
+  "version": "1.2.3",
+  "author": "Goncharov Vlad <holldike@gmail.com>",
+  "types": "out/types/types.d.ts",
+  "main": "out/build/bundle.js",
+  "license": "MIT",
+  "description": "JS module which helps to build not reloading web applications.",
+  "homepage": "https://github.com/goncharov-vlad/spa-router#readme",
+  "scripts": {
+    "build": "webpack --env=production",
+    "dev": "webpack --env=development",
+    "lint": "eslint \"src/**\" --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/goncharov-vlad/spa-router"
+  },
+  "keywords": [
+    "routing",
+    "vanilla-router",
+    "javascript-router",
+    "js-router",
+    "single-page-router",
+    "spa",
+    "single-page-application",
+    "spa-router",
+    "router",
+    "frontend-router"
+  ],
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.30.5",
+    "@typescript-eslint/parser": "^5.30.5",
+    "eslint": "^8.19.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-n": "^15.2.4",
+    "eslint-plugin-promise": "^6.0.0",
+    "ts-loader": "^9.3.1",
+    "typescript": "^4.7.4",
+    "webpack": "^5.73.0"
+  },
+  "dependencies": {
+    "webpack-cli": "^4.10.0"
+  }
+}
