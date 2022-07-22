@@ -1,1 +1,1 @@
-# [CLICK HERE TO SEE README](spa-router/README.md) 📚
+# [**CLICK HERE TO SEE DOCUMENTATION**](https://github.com/goncharov-vlad/spa-router/tree/master/spa-router) 📚

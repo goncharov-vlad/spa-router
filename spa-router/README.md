@@ -22,21 +22,48 @@ Make frond controller pattern for server
 ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E) 
 
 <!-- Main -->
-# SPA-router
+# **SPA-router**
 
-> JS module which helps to build not reloading web applications.
-
-
-It's easy to install, configure and use.
+## **JS module which helps to build not reloading web applications**
 
 _A single-page application (SPA) is a web application or website that interacts with the user by dynamically rewriting
 the current web page with new data from the web server, instead of the default method of a web browser loading entire
 new pages. The goal is faster transitions that make the website feel more like a native app.
 <sub>[Wikipedia]</sub>_
 
+## **Getting started**
+
+It's easy to install, configure and use.
+
+### **Pre-requirements**
+As it stills be a js module, not a framework (at least for now ) you need to say http static server redirects all requests through the same index page (Front Controller Pattern)
+
+There is a lot of ways to do it for any environment, bellow shown the most faster way if your are a JS developer
+
+```js 
+const path = require('path')
+const express = require('express')
+const app = express()
+const public = path.join(__dirname, 'public')
+const ejs = require('ejs')
+const port = 3000
+
+app.engine('html', ejs.renderFile);
+
+app.use(express.static(public));
+
+app.set('view engine', 'html');
+
+app.all('*', (req, res) => {
+  res.render('index')
+})
+
+app.listen(port, () => console.log(`Ready on port ${port}`))
+```
 
 
-## Installing / Getting started
+
+### Installing
 
 Run to get success with installation.
 
@@ -45,8 +72,6 @@ npm i @goncharov-vlad/spa-router
 ```
 
 This command is just common way to install JS module.
-
-### Initial Configuration
 
 1. Import module.
 
