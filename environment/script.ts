@@ -1,4 +1,4 @@
-import Router from '@goncharov-vlad/spa-router'
+import Router from 'lib'
 
 const config = {
   notFoundAction: () => render({
@@ -52,13 +52,13 @@ const config = {
   ]
 }
 
-const router = new Router(config)
-
-const render = (params) => {
+function render(params) {
   const json = {
-    currentUrl: router.currentUrl,
+    currentUrl: window.location.pathname + window.location.search,
     ...params
   }
 
   document.getElementById('json').innerHTML = JSON.stringify(json, undefined, 2)
 }
+
+new Router(config)

@@ -3,6 +3,7 @@ const express = require('express')
 const app = express()
 const public = path.join(__dirname, 'public')
 const ejs = require('ejs')
+const port = 3000
 
 app.engine('html', ejs.renderFile);
 
@@ -14,4 +15,4 @@ app.all('*', (req, res) => {
   res.render('index')
 })
 
-app.listen(3000)
+app.listen(port, () => console.log(`Ready on port ${port}`))

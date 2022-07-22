@@ -1,2 +1,3 @@
 environment/node_modules
+environment/public/bundle.js
 spa-router/node_modules
