@@ -1,15 +1,3 @@
-
-
-<!-- 
-
-Supports all types of module and browser
-Why should I use the router ?
-Describe development tutorials - enviroments
-Fully typed
-Slashes does matter!
-Make frond controller pattern for server
- -->
-
 ![Downloads](https://img.shields.io/npm/dt/@goncharov-vlad/spa-router?style=for-the-badge)
 ![Size](https://img.shields.io/github/size/goncharov-vlad/spa-router/spa-router/out/build/bundle.js?style=for-the-badge)
 ![License](https://img.shields.io/github/license/goncharov-vlad/spa-router?style=for-the-badge)
@@ -22,14 +10,15 @@ Make frond controller pattern for server
 
 _A single-page application (SPA) is a web application or website that interacts with the user by dynamically rewriting
 the current web page with new data from the web server, instead of the default method of a web browser loading entire
-new pages. The goal is faster transitions that make the website feel more like a native app.
+new pages. The goal is faster transitions that make the website feel more like a native app
 <sub>[Wikipedia]</sub>_
 
 ## **What's the benefits this project can perform ?**
 
+* Passing of params to action with url path like in a regular REST API
 * It's fully types
-* Can be used directly in browser with `<script/>` tag
-* Supports UDM, CommonJS, ES6 modules
+* Can be used directly in browser with `<script>` tag
+* Buit as UMD and supports CommonJS, ES6 modules
 * The router stores all history, that means when client uses next/back buttons of browser the correspond routes will be
   triggered
 * Code of the module is very small, and it doesn't use any additional packages, that makes the module fast and simple
@@ -39,10 +28,12 @@ new pages. The goal is faster transitions that make the website feel more like a
 
 ## **Getting started**
 
-It's easy to install, configure and use.
+It's easy to install, configure and use
 
 ### **Pre-requirements**
 As it stills be a js module, not a framework (at least for now) you need to say http static server redirects all requests through the same index page (Front Controller Pattern). There is a lot of ways to do it for any environment. Bellow shown the most faster way to get it if your are a JS developer
+
+[See full example here](../environment)
 
 ```js 
 const path = require('path')
@@ -65,25 +56,31 @@ app.all('*', (req, res) => {
 app.listen(port, () => console.log(`Ready on port ${port}`))
 ```
 
-
-### Installing
-
-Run to get success with installation.
+### **Installing**
+Install module and import it with one of a common ways, the router supports all of them
 
 ```shell
 npm i @goncharov-vlad/spa-router
 ```
 
-This command is just common way to install JS module.
-
-1. Import module.
-
+ES6 module `import`
 ```js
 import Router from '@goncharov-vlad/spa-router'
 ```
 
-2. Define config object and specify route stack as config property.
+CommonJS module `require`
+```js
+const Router = require('@goncharov-vlad/spa-router')
+```
 
+HTML tag `<script>`
+```html
+<script scr="/path/to/cdn/file"></script>
+```
+
+### **Using**
+Define config object and pass the object to router instance
+ 
 ```js
 const config = {
   stack: [
@@ -97,46 +94,15 @@ const config = {
     },
     {
       action: (values) => console.log(`Comment ${values.commentId} of post ${values.postId}`),
-      pathTemplate: '/post/{postId}/comment/{commentId}',
+      pathTemplate: '/post/{postId}/comment/{commentId}'
     }
   ]
 }
-```
 
-3. Create new router instance with defined config.
-
-```js
 new Router(config)
 ```
 
-That's all.
-
-## Features
-
-After configuring the router just use links as usually
-
-When link is clicked, the router matches link path to each path template from route stack and when path template is
-matched the router executes its action passing data from path as first parameter.
-
-__Example__:
-
-```html
-<a href='/post/11/comment/12'></a>
-```
-
-Imagine you have that link and route with path template `/post/{postId}/comment/{commentId}` which will be matched after
-click, and then you will be able to get `postId` with value `11` and `commentId` with value `12` inside action callback
-by first parameter.
-
-Action callback can look like:
-
-```js
-(values) => console.log(`Comment ${values.commentId} of post ${values.postId}`)
-```
-
-__Of course, to pass data you also can use GET parameters__
-
-## Full config overview
+## **Full config overview**
 
 * **config** `object` <sub>parent</sub>
     * **stack** `route[]` <sub>require</sub>
@@ -151,27 +117,49 @@ __Of course, to pass data you also can use GET parameters__
   _Specific route_
     * **pathTemplate** `string` <sub>require</sub>
 
-      _Path by which action will be executed. To pass values use name of value inside curly braces_
+      _Path by which action will be executed. **Ending slashes does matter!** To pass values use name of value inside curly braces_
     * **action** `function` <sub>require</sub>
 
       _Action which will be executed. To get values from path use first param_
 
-## Contributing
+## **Features**
+
+After configuring the router just use links as usually
+```html
+<a href='/post/11/comment/12'></a>
+```
+When link is clicked, the router matches link path to each path template from route stack and when path template is matched the router executes its action passing data from path as first parameter
+
+__For Example__
+
+Imagine you have that link and route with path template `/post/{postId}/comment/{commentId}` which will be matched after
+click, and then you will be able to get `postId` with value `11` and `commentId` with value `12` inside action callback
+by first parameter.
+
+Action callback can look like:
+
+```js
+(values) => console.log(`Comment ${values.commentId} of post ${values.postId}`)
+```
+
+__Of course, to pass data you also can use GET parameters__
+
+## **Contributing**
 
 Contributions are always welcome!
 
 Project have to use [jsDocs](https://jsdoc.app/). You also can get full documentation with
 running `jsdoc -r path/to/this/module`.
 
-## Links
+## **Links**
 
 Github - https://github.com/goncharov-vlad/spa-router
 
 Npm - https://www.npmjs.com/package/@goncharov-vlad/spa-router
 
-## Licensing
+## **Licensing**
 
 The code in this project is licensed under MIT license.
 
-## Code Styling
+## **Code Styling**
 ![CodeStyle](https://cdn.rawgit.com/standard/standard/master/badge.svg)       
