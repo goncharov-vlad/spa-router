@@ -10,18 +10,12 @@ Slashes does matter!
 Make frond controller pattern for server
  -->
 
-<!-- Badges -->
-
-
-
-
 ![Downloads](https://img.shields.io/npm/dt/@goncharov-vlad/spa-router?style=for-the-badge)
 ![Size](https://img.shields.io/github/size/goncharov-vlad/spa-router/spa-router/out/build/bundle.js?style=for-the-badge)
 ![License](https://img.shields.io/github/license/goncharov-vlad/spa-router?style=for-the-badge)
 ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E) 
 
-<!-- Main -->
 # **SPA-router**
 
 ## **JS module which helps to build not reloading web applications**
@@ -31,14 +25,24 @@ the current web page with new data from the web server, instead of the default m
 new pages. The goal is faster transitions that make the website feel more like a native app.
 <sub>[Wikipedia]</sub>_
 
+## **What's the benefits this project can perform ?**
+
+* It's fully types
+* Can be used directly in browser with `<script/>` tag
+* Supports UDM, CommonJS, ES6 modules
+* The router stores all history, that means when client uses next/back buttons of browser the correspond routes will be
+  triggered
+* Code of the module is very small, and it doesn't use any additional packages, that makes the module fast and simple
+* The router automatically finds all new dynamically added in DOM links (MutationObserver)
+* You don't have to use old hash style of path
+* Router action is will not trigger in case of double click
+
 ## **Getting started**
 
 It's easy to install, configure and use.
 
 ### **Pre-requirements**
-As it stills be a js module, not a framework (at least for now ) you need to say http static server redirects all requests through the same index page (Front Controller Pattern)
-
-There is a lot of ways to do it for any environment, bellow shown the most faster way if your are a JS developer
+As it stills be a js module, not a framework (at least for now) you need to say http static server redirects all requests through the same index page (Front Controller Pattern). There is a lot of ways to do it for any environment. Bellow shown the most faster way to get it if your are a JS developer
 
 ```js 
 const path = require('path')
@@ -60,7 +64,6 @@ app.all('*', (req, res) => {
 
 app.listen(port, () => console.log(`Ready on port ${port}`))
 ```
-
 
 
 ### Installing
@@ -133,17 +136,6 @@ Action callback can look like:
 
 __Of course, to pass data you also can use GET parameters__
 
-### What's the bells and whistles this project can perform?
-
-* The router stores all history, that means when client uses next/back buttons of browser the correspond routes will be
-  triggered.
-
-* Code of the module is very small, and it doesn't use any additional modules, that makes the module fast and simple.
-
-* The router automatically finds all new dynamically added in DOM links (MutationObserver).
-
-* You don't have to use old hash style of path.
-
 ## Full config overview
 
 * **config** `object` <sub>parent</sub>
@@ -181,4 +173,5 @@ Npm - https://www.npmjs.com/package/@goncharov-vlad/spa-router
 
 The code in this project is licensed under MIT license.
 
-![codeStyle](https://cdn.rawgit.com/standard/standard/master/badge.svg)       
+## Code Styling
+![CodeStyle](https://cdn.rawgit.com/standard/standard/master/badge.svg)       
