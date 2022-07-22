@@ -13,7 +13,7 @@ the current web page with new data from the web server, instead of the default m
 new pages. The goal is faster transitions that make the website feel more like a native app
 <sub>[Wikipedia]</sub>_
 
-## **What's the benefits this project can perform ?**
+## **What are the benefits and what this project can perform ?**
 
 * Passing of params to action with url path like in a regular REST API
 * It's fully types
@@ -77,6 +77,7 @@ HTML tag `<script>`
 ```html
 <script scr="/path/to/cdn/file"></script>
 ```
+_Please don't expose `node_modules` dir, it's not about security. Host [built file](out/build/bundle.js) separatly with a CDN or inside public area_
 
 ### **Using**
 Define config object and pass the object to router instance
@@ -146,10 +147,30 @@ __Of course, to pass data you also can use GET parameters__
 
 ## **Contributing**
 
-Contributions are always welcome!
+Contribution is always welcome! Use [test environment](../environment) to develop new features and improve current code. Make pull requests to `dev` branch
 
-Project have to use [jsDocs](https://jsdoc.app/). You also can get full documentation with
-running `jsdoc -r path/to/this/module`.
+### **Usefull commands**
+To start local development server 
+
+```
+npm run start --prefix environment
+```
+To watch if module code has been changed and rebundle if it is
+```
+npm run watch --prefix environment 
+```
+To make dynamic rebuilding and readable code
+```
+npm run dev --prefix spa-router 
+```
+To make code follow to standard
+```
+npm run lint --prefix spa-router 
+```
+To build ready to publish code
+```
+npm run build --prefix spa-router 
+```
 
 ## **Links**
 
