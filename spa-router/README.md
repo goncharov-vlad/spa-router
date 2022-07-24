@@ -6,7 +6,7 @@
 
 # **SPA-router**
 
-## **JS module to build a spa web application**
+## **JS module to build a single-page application**
 
 _A single-page application (SPA) is a web application or website that interacts with the user by dynamically rewriting
 the current web page with new data from the web server, instead of the default method of a web browser loading entire
@@ -32,7 +32,7 @@ It's easy to install, configure and use
 ### **Pre-requirements**
 Since it is a js module, not a framework (at least for now), you need to make your HTTP static server redirects all requests through the same index page (Front Controller Pattern). There are a lot of ways to do it for any environment. Below is shown the faster way to do it if you are a JS developer
 
-[See full example here](../environment)
+[See full example here](https://github.com/goncharov-vlad/spa-router/tree/master/environment)
 
 ```js 
 const path = require('path')
@@ -76,7 +76,7 @@ HTML tag `<script>`
 ```html
 <script src="/path/to/cdn/file"></script>
 ```
-_Please don't expose `node_modules` dir cause it's not about security. Host [built file](out/build/bundle.js) separately with a CDN or inside a public area_
+_Please don't expose `node_modules` dir cause it's not about security. Host [built file](https://github.com/goncharov-vlad/spa-router/blob/master/spa-router/out/build/bundle.js) separately with a CDN or inside a public area_
 
 ### **Using**
 Define config object and pass it to router instance
@@ -146,7 +146,7 @@ __Of course, to pass value you also can use GET parameters__
 
 ## **Contributing**
 
-Contribution is always welcome! Use [test environment](../environment) to develop new features and improve current code. Make pull requests to `dev` branch
+Contribution is always welcome! Use [test environment](https://github.com/goncharov-vlad/spa-router/tree/master/environment) to develop new features and improve current code. Make pull requests to `dev` branch
 
 ### **Usefull commands**
 To start local development server 
