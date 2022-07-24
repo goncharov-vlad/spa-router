@@ -5,7 +5,7 @@
   "types": "out/types/types.d.ts",
   "main": "out/build/bundle.js",
   "license": "MIT",
-  "description": "JS module which helps to build not reloading web applications",
+  "description": "JS module to build a spa web application",
   "homepage": "https://github.com/goncharov-vlad/spa-router/tree/master/spa-router#readme",
   "scripts": {
     "build": "webpack --env=production",

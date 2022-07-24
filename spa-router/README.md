@@ -6,24 +6,23 @@
 
 # **SPA-router**
 
-## **JS module which helps to build not reloading web applications**
+## **JS module to build a spa web application**
 
 _A single-page application (SPA) is a web application or website that interacts with the user by dynamically rewriting
 the current web page with new data from the web server, instead of the default method of a web browser loading entire
 new pages. The goal is faster transitions that make the website feel more like a native app
 <sub>[Wikipedia]</sub>_
 
-## **What are the benefits and what this project can perform ?**
+## **What are the benefits and what this project can perform?**
 
-* Passing of params to action with url path like in a regular REST API
+* Passing of params to action with URL path like in a regular REST API
 * It's fully types
-* Can be used directly in browser with `<script>` tag
-* Buit as UMD and supports CommonJS, ES6 modules
-* The router stores all history, that means when client uses next/back buttons of browser the correspond routes will be
-  triggered
-* Code of the module is very small, and it doesn't use any additional packages, that makes the module fast and simple
-* The router automatically finds all new dynamically added in DOM links (MutationObserver)
-* You don't have to use old hash style of path
+* Can be used directly in browsers with `<script>` tag
+* Built as UMD and supports CommonJS, ES6 modules
+* The router stores all history, which means when client uses next/back buttons of the browser corresponding routes will be triggered
+* Code of the module is very small, and it doesn't use any additional packages, which makes the module fast and simple
+* The router automatically finds all freshly dynamically added in DOM links (MutationObserver)
+* You don't have to use an old hash style of path
 * Router action is will not trigger in case of double click
 
 ## **Getting started**
@@ -31,7 +30,7 @@ new pages. The goal is faster transitions that make the website feel more like a
 It's easy to install, configure and use
 
 ### **Pre-requirements**
-As it stills be a js module, not a framework (at least for now) you need to say http static server redirects all requests through the same index page (Front Controller Pattern). There is a lot of ways to do it for any environment. Bellow shown the most faster way to get it if your are a JS developer
+Since it is a js module, not a framework (at least for now), you need to make your HTTP static server redirects all requests through the same index page (Front Controller Pattern). There are a lot of ways to do it for any environment. Below is shown the faster way to do it if you are a JS developer
 
 [See full example here](../environment)
 
@@ -57,7 +56,7 @@ app.listen(port, () => console.log(`Ready on port ${port}`))
 ```
 
 ### **Installing**
-Install module and import it with one of a common ways, the router supports all of them
+Install the module and import it in one of the common ways. The router supports all of them
 
 ```shell
 npm i @goncharov-vlad/spa-router
@@ -75,12 +74,12 @@ const Router = require('@goncharov-vlad/spa-router')
 
 HTML tag `<script>`
 ```html
-<script scr="/path/to/cdn/file"></script>
+<script src="/path/to/cdn/file"></script>
 ```
-_Please don't expose `node_modules` dir, it's not about security. Host [built file](out/build/bundle.js) separatly with a CDN or inside public area_
+_Please don't expose `node_modules` dir cause it's not about security. Host [built file](out/build/bundle.js) separately with a CDN or inside a public area_
 
 ### **Using**
-Define config object and pass the object to router instance
+Define config object and pass it to router instance
  
 ```js
 const config = {
@@ -94,8 +93,8 @@ const config = {
       action: () => console.log('Contact')
     },
     {
-      action: (values) => console.log(`Comment ${values.commentId} of post ${values.postId}`),
-      pathTemplate: '/post/{postId}/comment/{commentId}'
+      pathTemplate: '/post/{postId}/comment/{commentId}',
+      action: (values) => console.log(`Comment ${values.commentId} of post ${values.postId}`)
     }
   ]
 }
@@ -111,21 +110,21 @@ new Router(config)
       _Array of routes_
     * **notFoundAction** `function`
 
-      _Action which will be executed when route is not found. Default action is `() => console.log('not-found')`_
+      _Action will be executed when the route is not found. Default action is `() => console.log('not-found')`_
 
 * **route** `object`
 
   _Specific route_
     * **pathTemplate** `string` <sub>require</sub>
 
-      _Path by which action will be executed. **Ending slashes does matter!** To pass values use name of value inside curly braces_
+      _Path by which action will be executed. **Ending slashes does matter!** Use value name inside curly braces to pass it to an action_
     * **action** `function` <sub>require</sub>
 
-      _Action which will be executed. To get values from path use first param_
+      _Action which will be executed. Use first param to get values from path_
 
 ## **Features**
 
-After configuring the router just use links as usually
+After configuring the router use links as usually
 ```html
 <a href='/post/11/comment/12'></a>
 ```
@@ -143,7 +142,7 @@ Action callback can look like:
 (values) => console.log(`Comment ${values.commentId} of post ${values.postId}`)
 ```
 
-__Of course, to pass data you also can use GET parameters__
+__Of course, to pass value you also can use GET parameters__
 
 ## **Contributing**
 
@@ -155,19 +154,19 @@ To start local development server
 ```
 npm run start --prefix environment
 ```
-To watch if module code has been changed and rebundle if it is
+To watch if module code has been changed and bundle if so
 ```
 npm run watch --prefix environment 
 ```
-To make dynamic rebuilding and readable code
+To make code dynamic rebuilding and readable
 ```
 npm run dev --prefix spa-router 
 ```
-To make code follow to standard
+To make code follow standard
 ```
 npm run lint --prefix spa-router 
 ```
-To build ready to publish code
+To build code ready to publish
 ```
 npm run build --prefix spa-router 
 ```
