@@ -1,6 +1,6 @@
 {
   "name": "@goncharov-vlad/spa-router",
-  "version": "1.2.3",
+  "version": "2.0.4",
   "author": "Goncharov Vlad <holldike@gmail.com>",
   "types": "out/types/types.d.ts",
   "main": "out/build/bundle.js",

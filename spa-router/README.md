@@ -148,7 +148,7 @@ __Of course, to pass value you also can use GET parameters__
 
 Contribution is always welcome! Use [test environment](https://github.com/goncharov-vlad/spa-router/tree/master/environment) to develop new features and improve current code. Make pull requests to `dev` branch
 
-### **Usefull commands**
+### **Useful commands**
 To start local development server 
 
 ```
@@ -181,5 +181,5 @@ Npm - https://www.npmjs.com/package/@goncharov-vlad/spa-router
 
 The code in this project is licensed under MIT license.
 
-## **Code Styling**
+## **Code styling**
 ![CodeStyle](https://cdn.rawgit.com/standard/standard/master/badge.svg)       
