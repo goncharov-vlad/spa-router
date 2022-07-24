@@ -1,15 +1,3 @@
-
-
-<!-- 
-
-Supports all types of module and browser
-Why should I use the router ?
-Describe development tutorials - enviroments
-Fully typed
-Slashes does matter!
-Make frond controller pattern for server
- -->
-
 ![Downloads](https://img.shields.io/npm/dt/@goncharov-vlad/spa-router?style=for-the-badge)
 ![Size](https://img.shields.io/github/size/goncharov-vlad/spa-router/spa-router/out/build/bundle.js?style=for-the-badge)
 ![License](https://img.shields.io/github/license/goncharov-vlad/spa-router?style=for-the-badge)
@@ -18,31 +6,33 @@ Make frond controller pattern for server
 
 # **SPA-router**
 
-## **JS module which helps to build not reloading web applications**
+## **JS module to build a spa web application**
 
 _A single-page application (SPA) is a web application or website that interacts with the user by dynamically rewriting
 the current web page with new data from the web server, instead of the default method of a web browser loading entire
-new pages. The goal is faster transitions that make the website feel more like a native app.
+new pages. The goal is faster transitions that make the website feel more like a native app
 <sub>[Wikipedia]</sub>_
 
-## **What's the benefits this project can perform ?**
+## **What are the benefits and what this project can perform?**
 
+* Passing of params to action with URL path like in a regular REST API
 * It's fully types
-* Can be used directly in browser with `<script/>` tag
-* Supports UDM, CommonJS, ES6 modules
-* The router stores all history, that means when client uses next/back buttons of browser the correspond routes will be
-  triggered
-* Code of the module is very small, and it doesn't use any additional packages, that makes the module fast and simple
-* The router automatically finds all new dynamically added in DOM links (MutationObserver)
-* You don't have to use old hash style of path
+* Can be used directly in browsers with `<script>` tag
+* Built as UMD and supports CommonJS, ES6 modules
+* The router stores all history, which means when client uses next/back buttons of the browser corresponding routes will be triggered
+* Code of the module is very small, and it doesn't use any additional packages, which makes the module fast and simple
+* The router automatically finds all freshly dynamically added in DOM links (MutationObserver)
+* You don't have to use an old hash style of path
 * Router action is will not trigger in case of double click
 
 ## **Getting started**
 
-It's easy to install, configure and use.
+It's easy to install, configure and use
 
 ### **Pre-requirements**
-As it stills be a js module, not a framework (at least for now) you need to say http static server redirects all requests through the same index page (Front Controller Pattern). There is a lot of ways to do it for any environment. Bellow shown the most faster way to get it if your are a JS developer
+Since it is a js module, not a framework (at least for now), you need to make your HTTP static server redirects all requests through the same index page (Front Controller Pattern). There are a lot of ways to do it for any environment. Below is shown the faster way to do it if you are a JS developer
+
+[See full example here](../environment)
 
 ```js 
 const path = require('path')
@@ -65,25 +55,32 @@ app.all('*', (req, res) => {
 app.listen(port, () => console.log(`Ready on port ${port}`))
 ```
 
-
-### Installing
-
-Run to get success with installation.
+### **Installing**
+Install the module and import it in one of the common ways. The router supports all of them
 
 ```shell
 npm i @goncharov-vlad/spa-router
 ```
 
-This command is just common way to install JS module.
-
-1. Import module.
-
+ES6 module `import`
 ```js
 import Router from '@goncharov-vlad/spa-router'
 ```
 
-2. Define config object and specify route stack as config property.
+CommonJS module `require`
+```js
+const Router = require('@goncharov-vlad/spa-router')
+```
 
+HTML tag `<script>`
+```html
+<script src="/path/to/cdn/file"></script>
+```
+_Please don't expose `node_modules` dir cause it's not about security. Host [built file](out/build/bundle.js) separately with a CDN or inside a public area_
+
+### **Using**
+Define config object and pass it to router instance
+ 
 ```js
 const config = {
   stack: [
@@ -96,33 +93,44 @@ const config = {
       action: () => console.log('Contact')
     },
     {
-      action: (values) => console.log(`Comment ${values.commentId} of post ${values.postId}`),
       pathTemplate: '/post/{postId}/comment/{commentId}',
+      action: (values) => console.log(`Comment ${values.commentId} of post ${values.postId}`)
     }
   ]
 }
-```
 
-3. Create new router instance with defined config.
-
-```js
 new Router(config)
 ```
 
-That's all.
+## **Full config overview**
 
-## Features
+* **config** `object` <sub>parent</sub>
+    * **stack** `route[]` <sub>require</sub>
 
-After configuring the router just use links as usually
+      _Array of routes_
+    * **notFoundAction** `function`
 
-When link is clicked, the router matches link path to each path template from route stack and when path template is
-matched the router executes its action passing data from path as first parameter.
+      _Action will be executed when the route is not found. Default action is `() => console.log('not-found')`_
 
-__Example__:
+* **route** `object`
 
+  _Specific route_
+    * **pathTemplate** `string` <sub>require</sub>
+
+      _Path by which action will be executed. **Ending slashes does matter!** Use value name inside curly braces to pass it to an action_
+    * **action** `function` <sub>require</sub>
+
+      _Action which will be executed. Use first param to get values from path_
+
+## **Features**
+
+After configuring the router use links as usually
 ```html
 <a href='/post/11/comment/12'></a>
 ```
+When link is clicked, the router matches link path to each path template from route stack and when path template is matched the router executes its action passing data from path as first parameter
+
+__For Example__
 
 Imagine you have that link and route with path template `/post/{postId}/comment/{commentId}` which will be matched after
 click, and then you will be able to get `postId` with value `11` and `commentId` with value `12` inside action callback
@@ -134,44 +142,44 @@ Action callback can look like:
 (values) => console.log(`Comment ${values.commentId} of post ${values.postId}`)
 ```
 
-__Of course, to pass data you also can use GET parameters__
+__Of course, to pass value you also can use GET parameters__
 
-## Full config overview
+## **Contributing**
 
-* **config** `object` <sub>parent</sub>
-    * **stack** `route[]` <sub>require</sub>
+Contribution is always welcome! Use [test environment](../environment) to develop new features and improve current code. Make pull requests to `dev` branch
 
-      _Array of routes_
-    * **notFoundAction** `function`
+### **Usefull commands**
+To start local development server 
 
-      _Action which will be executed when route is not found. Default action is `() => console.log('not-found')`_
+```
+npm run start --prefix environment
+```
+To watch if module code has been changed and bundle if so
+```
+npm run watch --prefix environment 
+```
+To make code dynamic rebuilding and readable
+```
+npm run dev --prefix spa-router 
+```
+To make code follow standard
+```
+npm run lint --prefix spa-router 
+```
+To build code ready to publish
+```
+npm run build --prefix spa-router 
+```
 
-* **route** `object`
-
-  _Specific route_
-    * **pathTemplate** `string` <sub>require</sub>
-
-      _Path by which action will be executed. To pass values use name of value inside curly braces_
-    * **action** `function` <sub>require</sub>
-
-      _Action which will be executed. To get values from path use first param_
-
-## Contributing
-
-Contributions are always welcome!
-
-Project have to use [jsDocs](https://jsdoc.app/). You also can get full documentation with
-running `jsdoc -r path/to/this/module`.
-
-## Links
+## **Links**
 
 Github - https://github.com/goncharov-vlad/spa-router
 
 Npm - https://www.npmjs.com/package/@goncharov-vlad/spa-router
 
-## Licensing
+## **Licensing**
 
 The code in this project is licensed under MIT license.
 
-## Code Styling
+## **Code Styling**
 ![CodeStyle](https://cdn.rawgit.com/standard/standard/master/badge.svg)       
