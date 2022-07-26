@@ -5,11 +5,11 @@ const public = path.join(__dirname, 'public')
 const ejs = require('ejs')
 const port = 3000
 
-app.engine('html', ejs.renderFile);
+app.engine('html', ejs.renderFile)
 
-app.use(express.static(public));
+app.use(express.static(public))
 
-app.set('view engine', 'html');
+app.set('view engine', 'html')
 
 app.all('*', (req, res) => {
   res.render('index')

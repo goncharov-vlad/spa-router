@@ -20,7 +20,7 @@ new pages. The goal is faster transitions that make the website feel more like a
 * Can be used directly in browsers with `<script>` tag
 * Built as UMD and supports CommonJS, ES6 modules
 * The router stores all history, which means when client uses next/back buttons of the browser corresponding routes will be triggered
-* Code of the module is very small, and it doesn't use any additional packages, which makes the module fast and simple
+* Module built file is very small, and it doesn't use any additional packages, which makes the module fast and simple
 * The router automatically finds all freshly dynamically added in DOM links (MutationObserver)
 * You don't have to use an old hash style of path
 * Router action is will not trigger in case of double click
@@ -42,11 +42,11 @@ const public = path.join(__dirname, 'public')
 const ejs = require('ejs')
 const port = 3000
 
-app.engine('html', ejs.renderFile);
+app.engine('html', ejs.renderFile)
 
-app.use(express.static(public));
+app.use(express.static(public))
 
-app.set('view engine', 'html');
+app.set('view engine', 'html')
 
 app.all('*', (req, res) => {
   res.render('index')
@@ -130,11 +130,9 @@ After configuring the router use links as usually
 ```
 When link is clicked, the router matches link path to each path template from route stack and when path template is matched the router executes its action passing data from path as first parameter
 
-__For Example__
-
 Imagine you have that link and route with path template `/post/{postId}/comment/{commentId}` which will be matched after
 click, and then you will be able to get `postId` with value `11` and `commentId` with value `12` inside action callback
-by first parameter.
+by first parameter
 
 Action callback can look like:
 
@@ -179,7 +177,7 @@ Npm - https://www.npmjs.com/package/@goncharov-vlad/spa-router
 
 ## **Licensing**
 
-The code in this project is licensed under MIT license.
+The code in this project is licensed under MIT license
 
 ## **Code styling**
 ![CodeStyle](https://cdn.rawgit.com/standard/standard/master/badge.svg)       
